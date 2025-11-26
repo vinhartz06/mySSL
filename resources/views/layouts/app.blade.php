@@ -23,11 +23,12 @@
         width: 100%;
         z-index: 2000;
         transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-        background-color: transparent;
+        background-color: rgba(74, 20, 140, 0.3);
+        backdrop-filter: blur(5px);
     }
 
     .navbar-scrolled {
-        background-color: rgba(74, 20, 140, 0.65);
+        background-color: rgba(74, 20, 140, 0.9);
         backdrop-filter: blur(10px);
     }
 </style>
@@ -70,7 +71,7 @@
         </div>
     </nav>
 
-    <main class="pt-20">
+    <main>
         @yield('content')
     </main>
 

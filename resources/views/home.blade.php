@@ -12,6 +12,7 @@
         align-items: center;
         padding-top: 0;
         padding-bottom: 0;
+        margin-top: 0;
     }
 
     .content-offset {
@@ -123,7 +124,7 @@
             <div class="feature-card h-full text-center p-6">
                 <i class="fas fa-trophy fa-4x text-yellow-400 mb-3"></i>
                 <h5 class="font-semibold mb-2">Standings</h5>
-                <p>Track your favorite team’s position in the standings, updated in real time.</p>
+                <p>Track your favorite team's position in the standings, updated in real time.</p>
             </div>
             <div class="feature-card h-full text-center p-6">
                 <i class="fas fa-users fa-4x text-green-500 mb-3"></i>
@@ -205,49 +206,55 @@
             <p class="text-gray-500">Players with the most goals this season.</p>
         </div>
 
-        <div class="grid grid-cols-1">
-            <div class="w-full bg-white rounded shadow p-6">
-
-                <div class="flex items-center mb-3 pb-3 border-b border-gray-200">
-                    <div class="mr-3">
-                        <span class="bg-yellow-400 text-black text-lg px-2 py-1 rounded">1</span>
-                    </div>
-                    <div class="flex-grow">
-                        <strong>Jonathan Vincent Hartono</strong>
-                        <div class="text-gray-500 text-sm">FIKOM</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-xl font-bold text-blue-500">7 <i class="fas fa-futbol"></i></div>
-                    </div>
-                </div>
-
-                <div class="flex items-center mb-3 pb-3 border-b border-gray-200">
-                    <div class="mr-3">
-                        <span class="bg-gray-400 text-black text-lg px-2 py-1 rounded">2</span>
-                    </div>
-                    <div class="flex-grow">
-                        <strong>Marko Simic</strong>
-                        <div class="text-gray-500 text-sm">FLA</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-xl font-bold text-blue-500">5 <i class="fas fa-futbol"></i></div>
-                    </div>
-                </div>
-
-                <div class="flex items-center">
-                    <div class="mr-3">
-                        <span class="bg-gray-400 text-black text-lg px-2 py-1 rounded">3</span>
-                    </div>
-                    <div class="flex-grow">
-                        <strong>Ilija Spasojevic</strong>
-                        <div class="text-gray-500 text-sm">FPSI</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-xl font-bold text-blue-500">5 <i class="fas fa-futbol"></i></div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="overflow-x-auto">
+            <table class="w-full bg-white rounded shadow">
+                <thead class="bg-purple-800 text-white">
+                    <tr>
+                        <th class="py-3 px-4 text-center">#</th>
+                        <th class="py-3 px-4 text-left">Player</th>
+                        <th class="py-3 px-4 text-center">Team</th>
+                        <th class="py-3 px-4 text-center">Goals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
+                        <td class="py-3 px-4 text-center">
+                            <span class="bg-yellow-400 text-black px-2 py-1 rounded font-semibold">1</span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <strong>Jonathan Vincent Hartono</strong>
+                        </td>
+                        <td class="py-3 px-4 text-center text-gray-600">FIKOM</td>
+                        <td class="py-3 px-4 text-center">
+                            <span class="text-xl font-bold text-blue-500">7 <i class="fas fa-futbol"></i></span>
+                        </td>
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
+                        <td class="py-3 px-4 text-center">
+                            <span class="bg-gray-400 text-black px-2 py-1 rounded font-semibold">2</span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <strong>Marko Simic</strong>
+                        </td>
+                        <td class="py-3 px-4 text-center text-gray-600">FLA</td>
+                        <td class="py-3 px-4 text-center">
+                            <span class="text-xl font-bold text-blue-500">5 <i class="fas fa-futbol"></i></span>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="py-3 px-4 text-center">
+                            <span class="bg-gray-400 text-black px-2 py-1 rounded font-semibold">3</span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <strong>Ilija Spasojevic</strong>
+                        </td>
+                        <td class="py-3 px-4 text-center text-gray-600">FPSI</td>
+                        <td class="py-3 px-4 text-center">
+                            <span class="text-xl font-bold text-blue-500">5 <i class="fas fa-futbol"></i></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </section>
