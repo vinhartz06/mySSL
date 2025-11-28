@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Club;
@@ -20,6 +21,12 @@ class ClubController extends Controller
      */
     public function show(Club $club)
     {
+        // Eager load players with their stats for better performance
+        $club->load(['players' => function($query) {
+            $query->orderBy('jersey_no')
+                  ->with('stats'); // Eager load stats relationship
+        }]);
+
         return view('clubs.show', compact('club'));
     }
 }
