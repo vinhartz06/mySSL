@@ -34,44 +34,41 @@
 </style>
 
 <body class="bg-gray-100">
-
     <nav class="navbar-custom text-white">
         <div class="max-w-6xl mx-auto flex items-center justify-between py-4 px-4">
-
             <a href="{{ route('home') }}" class="text-xl font-semibold flex items-center gap-2">
                 <i class="fas fa-futbol"></i> mySSL
             </a>
+
+            <div class="hidden md:flex items-center gap-6">
+                <a href="{{ route('home') }}" class="hover:text-gray-200 transition {{ request()->routeIs('home') ? 'font-bold' : '' }}">Home</a>
+                <a href="{{ route('standings') }}" class="hover:text-gray-200 transition {{ request()->routeIs('standings') ? 'font-bold' : '' }}">Standings</a>
+                <a href="{{ route('clubs.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('clubs.*') ? 'font-bold' : '' }}">Clubs</a>
+            </div>
 
             @auth
             <div class="flex items-center gap-4">
                 <span class="text-white">
                     Halo, {{ auth()->user()->name }}
                 </span>
-
-                <button type="submit"
-                    class="border border-white text-white px-3 py-1 rounded hover:bg-white hover:text-purple-800 transition">
+                <button type="submit" class="border border-white text-white px-3 py-1 rounded hover:bg-white hover:text-purple-800 transition">
                     Logout
                 </button>
             </div>
-
             @else
             <div class="flex items-center gap-3">
-                <a href="#"
-                    class="border border-white text-white px-3 py-1 rounded hover:bg-white hover:text-purple-800 transition">
+                <a href="{{ route('login') }}" class="border border-white text-white px-3 py-1 rounded hover:bg-white hover:text-purple-800 transition">
                     Login
                 </a>
-
-                <a href="#"
-                    class="bg-white text-purple-800 px-3 py-1 rounded hover:bg-gray-200 transition">
+                <a href="{{ route('register') }}" class="bg-white text-purple-800 px-3 py-1 rounded hover:bg-gray-200 transition">
                     Register
                 </a>
             </div>
             @endauth
-
         </div>
     </nav>
 
-    <main>
+    <main class="min-h-screen">
         @yield('content')
     </main>
 
