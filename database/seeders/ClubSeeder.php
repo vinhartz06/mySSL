@@ -13,47 +13,19 @@ class ClubSeeder extends Seeder
      */
     public function run(): void
     {
+        $timestamp = now();
+
         DB::table('clubs')->insert([
-            [
-                'name' => 'FEB',
-                'coach' => 'Michael Johnson'
-            ],
-            [
-                'name' => 'FHK',
-                'coach' => 'Andrew Smith'
-            ],
-            [
-                'name' => 'FITL',
-                'coach' => 'Robert Williams'
-            ],
-            [
-                'name' => 'FPSI',
-                'coach' => 'Daniel Brown'
-            ],
-            [
-                'name' => 'FIKOM',
-                'coach' => 'Christopher Davis'
-            ],
-            [
-                'name' => 'FT',
-                'coach' => 'Jonathan Miller'
-            ],
-            [
-                'name' => 'FAD',
-                'coach' => 'Anthony Wilson' 
-            ],
-            [
-                'name' => 'FLA',
-                'coach' => 'Thomas Moore'
-            ],
-            [
-                'name' => 'FTP',
-                'coach' => 'Matthew Taylor'
-            ],
-            [
-                'name' => 'FK',
-                'coach' => 'Steven Anderson'
-            ]
+            ['name' => 'FEB', 'coach' => 'Michael Johnson', 'created_at' => $timestamp, 'updated_at' => $timestamp],
+            ['name' => 'FHK', 'coach' => 'Andrew Smith', 'created_at' => $timestamp, 'updated_at' => $timestamp],
+            ['name' => 'FITL', 'coach' => 'Robert Williams', 'created_at' => $timestamp, 'updated_at' => $timestamp],
+            ['name' => 'FPSI', 'coach' => 'Daniel Brown', 'created_at' => $timestamp, 'updated_at' => $timestamp],
+            ['name' => 'FIKOM', 'coach' => 'Christopher Davis', 'created_at' => $timestamp, 'updated_at' => $timestamp],
+            ['name' => 'FT', 'coach' => 'Jonathan Miller', 'created_at' => $timestamp, 'updated_at' => $timestamp],
+            ['name' => 'FAD', 'coach' => 'Anthony Wilson', 'created_at' => $timestamp, 'updated_at' => $timestamp],
+            ['name' => 'FLA', 'coach' => 'Thomas Moore', 'created_at' => $timestamp, 'updated_at' => $timestamp],
+            ['name' => 'FTP', 'coach' => 'Matthew Taylor', 'created_at' => $timestamp, 'updated_at' => $timestamp],
+            ['name' => 'FK', 'coach' => 'Steven Anderson', 'created_at' => $timestamp, 'updated_at' => $timestamp],
         ]);
     }
 }
