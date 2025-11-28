@@ -1,3 +1,4 @@
+<!-- [file name]: app.blade.php -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -31,18 +32,24 @@
         background-color: rgba(74, 20, 140, 0.9);
         backdrop-filter: blur(10px);
     }
+
+    /* Remove default margin and padding */
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
 </style>
 
 <body class="bg-gray-100">
     <nav class="navbar-custom text-white">
-        <div class="max-w-6xl mx-auto flex items-center justify-between py-4 px-4">
+        <div class="max-w-6xl mx-auto flex items-center justify-between py-3 px-4"> <!-- Reduced py-4 to py-3 -->
             <a href="{{ route('home') }}" class="text-xl font-semibold flex items-center gap-2">
                 <i class="fas fa-futbol"></i> mySSL
             </a>
 
-            <div class="hidden md:flex items-center gap-6">
+            <div class="hidden md:flex items-center gap-8"> <!-- Increased gap from gap-6 to gap-8 -->
                 <a href="{{ route('home') }}" class="hover:text-gray-200 transition {{ request()->routeIs('home') ? 'font-bold' : '' }}">Home</a>
-                <a href="{{ route('standings') }}" class="hover:text-gray-200 transition {{ request()->routeIs('standings') ? 'font-bold' : '' }}">Standings</a>
+                {{-- <a href="{{ route('standings') }}" class="hover:text-gray-200 transition {{ request()->routeIs('standings') ? 'font-bold' : '' }}">Standings</a> --}}
                 <a href="{{ route('clubs.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('clubs.*') ? 'font-bold' : '' }}">Clubs</a>
             </div>
 
@@ -56,11 +63,13 @@
                 </button>
             </div>
             @else
-            <div class="flex items-center gap-3">
-                <a href="{{ route('login') }}" class="border border-white text-white px-3 py-1 rounded hover:bg-white hover:text-purple-800 transition">
+            <div class="flex items-center gap-4"> <!-- Increased gap from gap-3 to gap-4 -->
+                {{-- <a href="{{ route('login') }}" class="border border-white text-white px-3 py-1 rounded hover:bg-white hover:text-purple-800 transition"> --}}
+                <a href="#" class="border border-white text-white px-3 py-1 rounded hover:bg-white hover:text-purple-800 transition">
                     Login
                 </a>
-                <a href="{{ route('register') }}" class="bg-white text-purple-800 px-3 py-1 rounded hover:bg-gray-200 transition">
+                {{-- <a href="{{ route('register') }}" class="bg-white text-purple-800 px-3 py-1 rounded hover:bg-gray-200 transition"> --}}
+                <a href="#" class="bg-white text-purple-800 px-3 py-1 rounded hover:bg-gray-200 transition">
                     Register
                 </a>
             </div>
@@ -68,7 +77,7 @@
         </div>
     </nav>
 
-    <main class="min-h-screen">
+    <main class="min-h-screen pt-0"> <!-- Added pt-0 to remove padding-top -->
         @yield('content')
     </main>
 
