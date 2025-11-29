@@ -273,7 +273,7 @@
                     <div class="text-center">
                         <div class="text-lg sm:text-xl md:text-2xl font-bold text-purple-800 mb-2">Best Attack</div>
                         <div class="text-base sm:text-lg font-semibold">{{ $mostGoalsClub ?? 'N/A' }}</div>
-                        <div class="text-sm sm:text-base text-gray-600">{{ $mostGoals ?? 0 }} goals</div>
+                        <div class="text-sm sm:text-base text-gray-600">{{ $mostGoals ?? 0 }} goals scored</div>
                     </div>
                     <div class="text-center">
                         <div class="text-lg sm:text-xl md:text-2xl font-bold text-purple-800 mb-2">Best Defense</div>
