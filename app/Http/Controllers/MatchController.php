@@ -149,18 +149,10 @@ class MatchController extends Controller
     public function byMatchday($matchday)
     {
         // If you have a matchday column in your matches table:
-        // $matches = GameMatch::with(['homeClub', 'awayClub'])
-        //     ->where('matchday', $matchday)
-        //     ->orderBy('match_date', 'asc')
-        //     ->get();
-
-        // For now, we'll simulate matchdays by grouping matches
-        $allMatches = GameMatch::with(['homeClub', 'awayClub'])
+        $matches = GameMatch::with(['homeClub', 'awayClub'])
+            ->where('matchday', $matchday)
             ->orderBy('match_date', 'asc')
             ->get();
-
-        // Create virtual matchdays (5 matches per matchday)
-        $matches = $allMatches->slice(($matchday - 1) * 5, 5);
 
         return view('matches.matchday', compact('matches', 'matchday'));
     }

@@ -25,6 +25,7 @@ class FirstMatchdaySeeder extends Seeder
             [
                 'home_club_id' => 5,
                 'away_club_id' => 1,
+                'matchday' => 1,
                 'match_date' => '2025-08-15 15:00:00',
                 'venue' => 'FIKOM Stadium',
                 'status' => 'fulltime',
@@ -46,6 +47,7 @@ class FirstMatchdaySeeder extends Seeder
             [
                 'home_club_id' => 2,
                 'away_club_id' => 3,
+                'matchday' => 1,
                 'match_date' => '2025-08-15 17:30:00',
                 'venue' => 'FHK Arena',
                 'status' => 'fulltime',
@@ -67,6 +69,7 @@ class FirstMatchdaySeeder extends Seeder
             [
                 'home_club_id' => 4,
                 'away_club_id' => 6,
+                'matchday' => 1,
                 'match_date' => '2025-08-16 15:00:00',
                 'venue' => 'FPSI Ground',
                 'status' => 'fulltime',
@@ -88,6 +91,7 @@ class FirstMatchdaySeeder extends Seeder
             [
                 'home_club_id' => 7,
                 'away_club_id' => 8,
+                'matchday' => 1,
                 'match_date' => '2025-08-16 17:30:00',
                 'venue' => 'FAD Stadium',
                 'status' => 'fulltime',
@@ -109,6 +113,7 @@ class FirstMatchdaySeeder extends Seeder
             [
                 'home_club_id' => 9,
                 'away_club_id' => 10,
+                'matchday' => 1,
                 'match_date' => '2025-08-17 15:00:00',
                 'venue' => 'FTP Arena',
                 'status' => 'fulltime',

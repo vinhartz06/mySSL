@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('home_club_id')->constrained('clubs')->cascadeOnDelete();
             $table->foreignId('away_club_id')->constrained('clubs')->cascadeOnDelete();
+            $table->integer('matchday');
             $table->dateTime('match_date');
             $table->string('venue');
             $table->string('status');

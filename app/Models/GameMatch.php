@@ -27,6 +27,7 @@ class GameMatch extends Model
     protected $fillable = [
         'home_club_id',
         'away_club_id',
+        'matchday',
         'match_date',
         'venue',
         'status',
