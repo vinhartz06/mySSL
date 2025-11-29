@@ -26,7 +26,7 @@ class ClubController extends Controller
         $totalAssists = $club->players->sum('total_assists');
         
         // For matches played, we need to calculate differently to avoid duplicates
-        $totalMatches = $club->players->sum(function($player) {
+        $totalMatches = $club->players->max(function($player) {
             return $player->matches_played;
         });
 
