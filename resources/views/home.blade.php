@@ -98,7 +98,7 @@
             <p class="text-gray-500">Active Players</p>
         </div>
         <div class="stat-item">
-            <div class="stat-number">18</div>
+            <div class="stat-number">90</div>
             <p class="text-gray-500">Matches</p>
         </div>
         <div class="stat-item">

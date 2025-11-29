@@ -142,11 +142,11 @@
                         <p class="text-gray-600 font-medium">Clubs</p>
                     </div>
                     <div class="text-center">
-                        <div class="stat-number">10+</div>
+                        <div class="stat-number">10</div>
                         <p class="text-gray-600 font-medium">Professional Coaches</p>
                     </div>
                     <div class="text-center">
-                        <div class="stat-number">200+</div>
+                        <div class="stat-number">200</div>
                         <p class="text-gray-600 font-medium">Active Players</p>
                     </div>
                 </div>
