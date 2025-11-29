@@ -38,24 +38,27 @@ class Player extends Model
         return $this->hasMany(Stat::class);
     }
 
-    // calc matches played - FIXED
+    /**
+     * Get matches played count - SIMPLIFIED: just check if end_time > 0
+     */
+    public function getMatchesPlayedCount() {
+        return $this->stats()
+            ->select('match_id')
+            ->where('end_minute', '>', 0)
+            ->distinct('match_id')
+            ->count('match_id');
+    }
+
+    // calc matches played - SIMPLIFIED
     public function getMatchesPlayedAttribute() {
         if (!$this->relationLoaded('stats')) {
-            return $this->stats()
-                ->whereNotNull('start_minute')
-                ->whereNotNull('end_minute')
-                ->whereRaw('end_minute - start_minute > 0')
-                ->distinct('match_id')
-                ->count('match_id');
+            return $this->getMatchesPlayedCount();
         }
         
+        // Count distinct matches where end_minute > 0
         return $this->stats
-            ->filter(function($stat) {
-                return $stat->start_minute && 
-                       $stat->end_minute && 
-                       ($stat->end_minute - $stat->start_minute > 0);
-            })
-            ->unique('match_id')
+            ->where('end_minute', '>', 0)
+            ->groupBy('match_id')
             ->count();
     }
 
@@ -268,7 +271,8 @@ class Player extends Model
      * Check if player played in specific match
      */
     public function playedInMatch($matchId) {
-        return $this->getMinutesPlayedForMatch($matchId) > 0;
+        $stat = $this->getStatsForMatch($matchId);
+        return $stat && $stat->end_minute > 0;
     }
 
     // BATCH STATS FOR MULTIPLE MATCHES
@@ -283,6 +287,11 @@ class Player extends Model
             $stats = $this->stats->whereIn('match_id', $matchIds);
         }
         
+        // SIMPLIFIED: Count distinct matches where end_minute > 0
+        $matchesPlayed = $stats->where('end_minute', '>', 0)
+            ->groupBy('match_id')
+            ->count();
+
         return [
             'goals' => $stats->sum('goals') ?? 0,
             'assists' => $stats->sum('assists') ?? 0,
@@ -297,9 +306,7 @@ class Player extends Model
             'avg_succ_ground_duels' => round($stats->avg('succ_ground_duels') ?? 0, 2),
             'avg_succ_aerial_duels' => round($stats->avg('succ_aerial_duels') ?? 0, 2),
             'avg_succ_dribbles' => round($stats->avg('succ_dribbles') ?? 0, 2),
-            'matches_played' => $stats->filter(function($stat) {
-                return $stat->start_minute && $stat->end_minute && ($stat->end_minute - $stat->start_minute > 0);
-            })->count()
+            'matches_played' => $matchesPlayed
         ];
     }
 
@@ -310,18 +317,12 @@ class Player extends Model
         if (!$this->relationLoaded('stats')) {
             $stats = $this->stats()
                 ->with('match')
-                ->whereNotNull('start_minute')
-                ->whereNotNull('end_minute')
-                ->whereRaw('end_minute - start_minute > 0')
+                ->where('end_minute', '>', 0)
                 ->orderBy('match_id')
                 ->get();
         } else {
             $stats = $this->stats
-                ->whereNotNull('start_minute')
-                ->whereNotNull('end_minute')
-                ->filter(function($stat) {
-                    return $stat->end_minute - $stat->start_minute > 0;
-                })
+                ->where('end_minute', '>', 0)
                 ->sortBy('match_id');
         }
 

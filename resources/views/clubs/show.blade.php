@@ -312,30 +312,29 @@
             <div class="detail-card mb-8">
                 <h2 class="text-3xl font-bold mb-8 text-center section-title">Team Statistics</h2>
                 
-                @php
+                {{-- @php
                     $totalPlayers = $club->players->count();
                     $totalGoals = $club->players->sum('total_goals');
                     $totalAssists = $club->players->sum('total_assists');
                     $totalMatches = $club->players->sum('matches_played');
-                @endphp
+                @endphp --}}
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">{{ $totalPlayers }}</div>
-                        <div class="stat-label">Total Players</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">{{ $totalGoals }}</div>
-                        <div class="stat-label">Total Goals</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">{{ $totalAssists }}</div>
-                        <div class="stat-label">Total Assists</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">{{ $totalMatches }}</div>
-                        <div class="stat-label">Matches Played</div>
-                    </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{ $club->players->count() }}</div>
+                    <div class="stat-label">Total Players</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ $totalGoals }}</div>
+                    <div class="stat-label">Total Goals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ $totalAssists }}</div>
+                    <div class="stat-label">Total Assists</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ $totalMatches }}</div>
+                    <div class="stat-label">Matches Played</div>
                 </div>
             </div>
 

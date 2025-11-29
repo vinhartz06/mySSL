@@ -10,9 +10,6 @@ use App\Models\Standing;
 
 class FirstMatchdaySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $timestamp = now();
@@ -25,10 +22,9 @@ class FirstMatchdaySeeder extends Seeder
 
         // Create matches for first matchday (August 2025)
         $matches = [
-            // Match 1: FIKOM (home) vs FEB (away) - FIKOM wins
             [
-                'home_club_id' => 5, // FIKOM
-                'away_club_id' => 1, // FEB
+                'home_club_id' => 5,
+                'away_club_id' => 1,
                 'match_date' => '2025-08-15 15:00:00',
                 'venue' => 'FIKOM Stadium',
                 'status' => 'fulltime',
@@ -47,10 +43,9 @@ class FirstMatchdaySeeder extends Seeder
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp
             ],
-            // Match 2: FHK vs FITL
             [
-                'home_club_id' => 2, // FHK
-                'away_club_id' => 3, // FITL
+                'home_club_id' => 2,
+                'away_club_id' => 3,
                 'match_date' => '2025-08-15 17:30:00',
                 'venue' => 'FHK Arena',
                 'status' => 'fulltime',
@@ -69,10 +64,9 @@ class FirstMatchdaySeeder extends Seeder
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp
             ],
-            // Match 3: FPSI vs FT
             [
-                'home_club_id' => 4, // FPSI
-                'away_club_id' => 6, // FT
+                'home_club_id' => 4,
+                'away_club_id' => 6,
                 'match_date' => '2025-08-16 15:00:00',
                 'venue' => 'FPSI Ground',
                 'status' => 'fulltime',
@@ -91,10 +85,9 @@ class FirstMatchdaySeeder extends Seeder
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp
             ],
-            // Match 4: FAD vs FLA
             [
-                'home_club_id' => 7, // FAD
-                'away_club_id' => 8, // FLA
+                'home_club_id' => 7,
+                'away_club_id' => 8,
                 'match_date' => '2025-08-16 17:30:00',
                 'venue' => 'FAD Stadium',
                 'status' => 'fulltime',
@@ -113,10 +106,9 @@ class FirstMatchdaySeeder extends Seeder
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp
             ],
-            // Match 5: FTP vs FK
             [
-                'home_club_id' => 9, // FTP
-                'away_club_id' => 10, // FK
+                'home_club_id' => 9,
+                'away_club_id' => 10,
                 'match_date' => '2025-08-17 15:00:00',
                 'venue' => 'FTP Arena',
                 'status' => 'fulltime',
@@ -142,14 +134,12 @@ class FirstMatchdaySeeder extends Seeder
             $matchIds[] = DB::table('matches')->insertGetId($match);
         }
 
-        // Create lineups and stats for each match
-        $this->createMatchData($matchIds[0], 5, 1); // FIKOM vs FEB
-        $this->createMatchData($matchIds[1], 2, 3); // FHK vs FITL
-        $this->createMatchData($matchIds[2], 4, 6); // FPSI vs FT
-        $this->createMatchData($matchIds[3], 7, 8); // FAD vs FLA
-        $this->createMatchData($matchIds[4], 9, 10); // FTP vs FK
+        $this->createMatchData($matchIds[0], 5, 1);
+        $this->createMatchData($matchIds[1], 2, 3);
+        $this->createMatchData($matchIds[2], 4, 6);
+        $this->createMatchData($matchIds[3], 7, 8);
+        $this->createMatchData($matchIds[4], 9, 10);
 
-        // Create standings from match results
         $this->createStandingsFromMatches();
     }
 
@@ -157,118 +147,71 @@ class FirstMatchdaySeeder extends Seeder
     {
         $timestamp = now();
 
-        // Get players for both clubs
         $homePlayers = DB::table('players')->where('club_id', $homeClubId)->orderBy('id')->get();
         $awayPlayers = DB::table('players')->where('club_id', $awayClubId)->orderBy('id')->get();
 
-        // Get match result
         $match = DB::table('matches')->where('id', $matchId)->first();
         $homeScore = $match->home_score;
         $awayScore = $match->away_score;
 
-        // Define starting player IDs for 4-3-3 formation
-        $startingPlayerIds = [1, 4, 5, 6, 10, 11, 12, 16, 17, 18];
-        
-        // Create lineups and stats
+        // FIXED: starting lineup based on ID % 20
+        $startingPlayerMods = [1, 4, 5, 6, 7, 10, 11, 12, 16, 17, 18];
+
         $lineups = [];
         $stats = [];
 
-        // Home team lineups
-        $this->createTeamLineups($matchId, $homePlayers, $startingPlayerIds, $lineups, $stats, $homeClubId, $homeScore, $awayScore, true);
-        
-        // Away team lineups  
-        $this->createTeamLineups($matchId, $awayPlayers, $startingPlayerIds, $lineups, $stats, $awayClubId, $awayScore, $homeScore, false);
+        $this->createTeamLineups($matchId, $homePlayers, $startingPlayerMods, $lineups, $stats, $homeScore, $awayScore);
+        $this->createTeamLineups($matchId, $awayPlayers, $startingPlayerMods, $lineups, $stats, $awayScore, $homeScore);
 
-        // Insert lineups and stats
         DB::table('lineups')->insert($lineups);
         DB::table('stats')->insert($stats);
     }
 
-    private function createTeamLineups($matchId, $players, $startingPlayerIds, &$lineups, &$stats, $clubId, $teamScore, $opponentScore, $isHome)
+    private function createTeamLineups($matchId, $players, $startingPlayerMods, &$lineups, &$stats, $teamScore, $opponentScore)
     {
         $timestamp = now();
         $won = $teamScore > $opponentScore;
         $draw = $teamScore == $opponentScore;
 
-        // Create starting lineup (4-3-3 formation)
-        foreach ($startingPlayerIds as $playerOrder => $playerId) {
-            if (isset($players[$playerOrder])) {
-                $player = $players[$playerOrder];
-                
-                $lineups[] = [
-                    'match_id' => $matchId,
-                    'player_id' => $player->id,
-                    'role' => 'start',
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp
-                ];
+        // FIXED: Select starters by player ID % 20
+        foreach ($players as $player) {
+            $isStarter = in_array($player->id % 20, $startingPlayerMods);
+            
+            $lineups[] = [
+                'match_id' => $matchId,
+                'player_id' => $player->id,
+                'role' => $isStarter ? 'start' : 'sub',
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp
+            ];
 
-                // Create stats for starting players
-                $stats[] = $this->generatePlayerStats($matchId, $player, $teamScore, $won, $draw, true, $playerOrder);
-            }
-        }
-
-        // Create substitutes (remaining players)
-        for ($i = count($startingPlayerIds); $i < count($players); $i++) {
-            if (isset($players[$i])) {
-                $player = $players[$i];
-                
-                $lineups[] = [
-                    'match_id' => $matchId,
-                    'player_id' => $player->id,
-                    'role' => 'sub',
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp
-                ];
-
-                // Some substitutes get playing time
-                if (rand(1, 100) <= 40) { // 40% chance sub gets playing time
-                    $stats[] = $this->generatePlayerStats($matchId, $player, $teamScore, $won, $draw, false, $i);
-                }
+            // Only starters get stats, they all play 0-90
+            if ($isStarter) {
+                $stats[] = $this->generatePlayerStats($matchId, $player, $teamScore, $won, $draw, true, 0, 90);
             }
         }
     }
 
-    private function generatePlayerStats($matchId, $player, $teamScore, $won, $draw, $isStarter, $playerOrder)
+    private function generatePlayerStats($matchId, $player, $teamScore, $won, $draw, $isStarter, $startMinute = 0, $endMinute = 90)
     {
         $timestamp = now();
-        
+
         $isGoalkeeper = $player->position === 'GK';
         $isDefender = $player->position === 'DF';
         $isMidfielder = $player->position === 'MF';
         $isForward = $player->position === 'FW';
 
-        // Playing time
-        $startMinute = $isStarter ? 0 : rand(60, 75);
-        $endMinute = $isStarter ? 90 : 90;
         $minutesPlayed = $endMinute - $startMinute;
 
-        // Goals - ensure goals >= assists and match final score
-        $goals = 0;
-        $assists = 0;
-
-        // Distribute goals based on position and player order
-        if ($isStarter && $teamScore > 0) {
-            if ($isForward) {
-                // Forwards more likely to score
-                if ($playerOrder >= 16 && $playerOrder <= 18) { // Forward positions in 4-3-3
-                    $goalProbability = $won ? 0.4 : ($draw ? 0.2 : 0.1);
-                    if (rand(1, 100) <= ($goalProbability * 100)) {
-                        $goals = min(rand(1, 2), $teamScore);
-                    }
-                }
-            } elseif ($isMidfielder) {
-                // Midfielders can score too
-                if ($playerOrder >= 10 && $playerOrder <= 12) { // Midfield positions
-                    $goalProbability = $won ? 0.2 : ($draw ? 0.1 : 0.05);
-                    if (rand(1, 100) <= ($goalProbability * 100)) {
-                        $goals = 1;
-                    }
-                }
-            }
+        // FIXED: Give ALL goals to player where ID % 20 == 18
+        if ($player->id % 20 == 18) {
+            $goals = $teamScore;
+        } else {
+            $goals = 0;
         }
 
-        // Assists - ensure assists <= goals for the team
+        // KEEP assist logic untouched
+        $assists = 0;
         if ($isStarter && $teamScore > 0 && $goals == 0) {
             if ($isMidfielder || $isForward) {
                 $assistProbability = $won ? 0.3 : ($draw ? 0.15 : 0.08);
@@ -278,33 +221,16 @@ class FirstMatchdaySeeder extends Seeder
             }
         }
 
-        // Defensive stats
         $tackles = $isDefender ? rand(2, 6) : ($isMidfielder ? rand(1, 4) : ($isForward ? rand(0, 2) : 0));
-        $interceptions = $isDefender ? rand(3, 7) : ($isMidfielder ? rand(2, 5) : ($isForward ? rand(0, 1) : 0));
+        $interceptions = $isDefender ? rand(3, 7) : ($isMidfielder ? rand(2, 5) : 0);
         $clearances = $isDefender ? rand(4, 9) : ($isMidfielder ? rand(1, 3) : 0);
-
-        // Saves for goalkeepers
         $saves = $isGoalkeeper ? rand(3, 7) : 0;
 
-        // Cards and fouls
         $fouls = rand(0, 3);
         $yellowCards = rand(1, 100) <= 15 ? 1 : 0;
         $redCards = rand(1, 100) <= 3 ? 1 : 0;
 
-        // Success percentages - winning teams have better stats
-        $performanceBonus = $won ? 10 : ($draw ? 5 : 0);
-        
-        $basePassRate = 65 + $performanceBonus;
-        $succPasses = rand($basePassRate - 10, $basePassRate + 10);
-
-        $baseGroundDuelRate = 45 + $performanceBonus;
-        $succGroundDuels = rand($baseGroundDuelRate - 10, $baseGroundDuelRate + 10);
-
-        $baseAerialDuelRate = 40 + $performanceBonus;
-        $succAerialDuels = rand($baseAerialDuelRate - 10, $baseAerialDuelRate + 10);
-
-        $baseDribbleRate = 35 + $performanceBonus;
-        $succDribbles = rand($baseDribbleRate - 10, $baseDribbleRate + 10);
+        $perfBonus = $won ? 10 : ($draw ? 5 : 0);
 
         return [
             'match_id' => $matchId,
@@ -320,10 +246,10 @@ class FirstMatchdaySeeder extends Seeder
             'fouls' => $fouls,
             'yellow_cards' => $yellowCards,
             'red_cards' => $redCards,
-            'succ_passes' => $succPasses,
-            'succ_ground_duels' => $succGroundDuels,
-            'succ_aerial_duels' => $succAerialDuels,
-            'succ_dribbles' => $succDribbles,
+            'succ_passes' => rand(55 + $perfBonus, 75 + $perfBonus),
+            'succ_ground_duels' => rand(35 + $perfBonus, 55 + $perfBonus),
+            'succ_aerial_duels' => rand(30 + $perfBonus, 50 + $perfBonus),
+            'succ_dribbles' => rand(25 + $perfBonus, 45 + $perfBonus),
             'created_at' => $timestamp,
             'updated_at' => $timestamp
         ];
@@ -332,11 +258,10 @@ class FirstMatchdaySeeder extends Seeder
     private function createStandingsFromMatches()
     {
         $timestamp = now();
-        
-        // Initialize standings for all clubs
+
         $clubs = DB::table('clubs')->get();
         $standings = [];
-        
+
         foreach ($clubs as $club) {
             $standings[$club->id] = [
                 'club_id' => $club->id,
@@ -353,48 +278,41 @@ class FirstMatchdaySeeder extends Seeder
             ];
         }
 
-        // Calculate standings from matches
         $matches = DB::table('matches')->where('status', 'fulltime')->get();
-        
+
         foreach ($matches as $match) {
-            $homeClubId = $match->home_club_id;
-            $awayClubId = $match->away_club_id;
-            $homeScore = $match->home_score;
-            $awayScore = $match->away_score;
+            $home = $match->home_club_id;
+            $away = $match->away_club_id;
 
-            // Update home club
-            $standings[$homeClubId]['played']++;
-            $standings[$homeClubId]['goals_for'] += $homeScore;
-            $standings[$homeClubId]['goals_against'] += $awayScore;
-            
-            // Update away club
-            $standings[$awayClubId]['played']++;
-            $standings[$awayClubId]['goals_for'] += $awayScore;
-            $standings[$awayClubId]['goals_against'] += $homeScore;
+            $standings[$home]['played']++;
+            $standings[$away]['played']++;
 
-            // Determine result and update points
-            if ($homeScore > $awayScore) {
-                $standings[$homeClubId]['won']++;
-                $standings[$homeClubId]['points'] += 3;
-                $standings[$awayClubId]['lost']++;
-            } elseif ($awayScore > $homeScore) {
-                $standings[$awayClubId]['won']++;
-                $standings[$awayClubId]['points'] += 3;
-                $standings[$homeClubId]['lost']++;
+            $standings[$home]['goals_for'] += $match->home_score;
+            $standings[$home]['goals_against'] += $match->away_score;
+
+            $standings[$away]['goals_for'] += $match->away_score;
+            $standings[$away]['goals_against'] += $match->home_score;
+
+            if ($match->home_score > $match->away_score) {
+                $standings[$home]['won']++;
+                $standings[$home]['points'] += 3;
+                $standings[$away]['lost']++;
+            } elseif ($match->away_score > $match->home_score) {
+                $standings[$away]['won']++;
+                $standings[$away]['points'] += 3;
+                $standings[$home]['lost']++;
             } else {
-                $standings[$homeClubId]['draw']++;
-                $standings[$awayClubId]['draw']++;
-                $standings[$homeClubId]['points'] += 1;
-                $standings[$awayClubId]['points'] += 1;
+                $standings[$home]['draw']++;
+                $standings[$away]['draw']++;
+                $standings[$home]['points']++;
+                $standings[$away]['points']++;
             }
         }
 
-        // Calculate goal difference
-        foreach ($standings as &$standing) {
-            $standing['goal_diff'] = $standing['goals_for'] - $standing['goals_against'];
+        foreach ($standings as &$record) {
+            $record['goal_diff'] = $record['goals_for'] - $record['goals_against'];
         }
 
-        // Insert standings
         DB::table('standings')->insert(array_values($standings));
     }
 }
