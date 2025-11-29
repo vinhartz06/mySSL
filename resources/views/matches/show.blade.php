@@ -265,6 +265,12 @@
                     <div class="stat-value">{{ $matchStats['home']['yellow_cards'] }} - {{ $matchStats['away']['yellow_cards'] }}</div>
                     <div class="text-gray-600">Yellow Cards</div>
                 </div>
+
+                <!-- Red Cards -->
+                <div class="stat-item">
+                    <div class="stat-value">{{ $matchStats['home']['red_cards'] }} - {{ $matchStats['away']['red_cards'] }}</div>
+                    <div class="text-gray-600">Red Cards</div>
+                </div>
             </div>
         </div>
         @endif
