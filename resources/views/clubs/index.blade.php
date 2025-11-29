@@ -98,8 +98,8 @@
                     <a href="#clubs-grid" class="bg-white text-purple-800 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
                         Explore Clubs
                     </a>
-                    {{-- <a href="{{ route('standings') }}" class="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-800 transition duration-300"> --}}
-                    <a href="#" class="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-800 transition duration-300">
+                    <a href="{{ route('standings') }}" class="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-800 transition duration-300">
+                    {{-- <a href="#" class="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-800 transition duration-300"> --}}
                         View Standings
                     </a>
                 </div>

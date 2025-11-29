@@ -24,12 +24,12 @@
         width: 100%;
         z-index: 2000;
         transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-        background-color: rgba(74, 20, 140, 0.3);
+        background-color: rgba(74, 20, 140, 1);
         backdrop-filter: blur(5px);
     }
 
     .navbar-scrolled {
-        background-color: rgba(74, 20, 140, 0.9);
+        background-color: rgba(74, 20, 140, 0.7);
         backdrop-filter: blur(10px);
     }
 
@@ -49,7 +49,7 @@
 
             <div class="hidden md:flex items-center gap-8"> <!-- Increased gap from gap-6 to gap-8 -->
                 <a href="{{ route('home') }}" class="hover:text-gray-200 transition {{ request()->routeIs('home') ? 'font-bold' : '' }}">Home</a>
-                {{-- <a href="{{ route('standings') }}" class="hover:text-gray-200 transition {{ request()->routeIs('standings') ? 'font-bold' : '' }}">Standings</a> --}}
+                <a href="{{ route('standings') }}" class="hover:text-gray-200 transition {{ request()->routeIs('standings') ? 'font-bold' : '' }}">Standings</a>
                 <a href="{{ route('clubs.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('clubs.*') ? 'font-bold' : '' }}">Clubs</a>
             </div>
 
