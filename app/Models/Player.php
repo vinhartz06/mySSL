@@ -38,81 +38,143 @@ class Player extends Model
         return $this->hasMany(Stat::class);
     }
 
-    // calc matches played
+    // calc matches played - FIXED
     public function getMatchesPlayedAttribute() {
-        return $this->stats()
-            ->whereNotNull('start_minute')
-            ->whereNotNull('end_minute')
-            ->whereRaw('end_minute - start_minute > 0')
-            ->distinct('match_id')
-            ->count('match_id');
+        if (!$this->relationLoaded('stats')) {
+            return $this->stats()
+                ->whereNotNull('start_minute')
+                ->whereNotNull('end_minute')
+                ->whereRaw('end_minute - start_minute > 0')
+                ->distinct('match_id')
+                ->count('match_id');
+        }
+        
+        return $this->stats
+            ->filter(function($stat) {
+                return $stat->start_minute && 
+                       $stat->end_minute && 
+                       ($stat->end_minute - $stat->start_minute > 0);
+            })
+            ->unique('match_id')
+            ->count();
     }
 
-    // calc goals
+    // calc goals - FIXED
     public function getTotalGoalsAttribute() {
-        return $this->stats()->sum('goals') ?? 0;
+        if (!$this->relationLoaded('stats')) {
+            return (int) $this->stats()->sum('goals');
+        }
+        return (int) $this->stats->sum('goals');
     }
 
-    // calc assists
+    // calc assists - FIXED
     public function getTotalAssistsAttribute() {
-        return $this->stats()->sum('assists') ?? 0;
+        if (!$this->relationLoaded('stats')) {
+            return (int) $this->stats()->sum('assists');
+        }
+        return (int) $this->stats->sum('assists');
     }
 
-    // calc yellow
+    // calc yellow - FIXED
     public function getTotalYellowCardsAttribute() {
-        return $this->stats()->sum('yellow_cards') ?? 0;
+        if (!$this->relationLoaded('stats')) {
+            return (int) $this->stats()->sum('yellow_cards');
+        }
+        return (int) $this->stats->sum('yellow_cards');
     }
 
-    // calc red
+    // calc red - FIXED
     public function getTotalRedCardsAttribute() {
-        return $this->stats()->sum('red_cards') ?? 0;
+        if (!$this->relationLoaded('stats')) {
+            return (int) $this->stats()->sum('red_cards');
+        }
+        return (int) $this->stats->sum('red_cards');
     }
 
     // calc saves
     public function getTotalSavesAttribute() {
-        return $this->stats()->sum('saves') ?? 0;
+        if (!$this->relationLoaded('stats')) {
+            return (int) $this->stats()->sum('saves');
+        }
+        return (int) $this->stats->sum('saves');
     }
 
     // calc tackles
     public function getTotalTacklesAttribute() {
-        return $this->stats()->sum('tackles') ?? 0;
+        if (!$this->relationLoaded('stats')) {
+            return (int) $this->stats()->sum('tackles');
+        }
+        return (int) $this->stats->sum('tackles');
     }
 
     // calc intercepts
     public function getTotalInterceptionsAttribute() {
-        return $this->stats()->sum('interceptions') ?? 0;
+        if (!$this->relationLoaded('stats')) {
+            return (int) $this->stats()->sum('interceptions');
+        }
+        return (int) $this->stats->sum('interceptions');
     }
 
     // calc clearances
     public function getTotalClearancesAttribute() {
-        return $this->stats()->sum('clearances') ?? 0;
+        if (!$this->relationLoaded('stats')) {
+            return (int) $this->stats()->sum('clearances');
+        }
+        return (int) $this->stats->sum('clearances');
     }
 
     // calc fouls
     public function getTotalFoulsAttribute() {
-        return $this->stats()->sum('fouls') ?? 0;
+        if (!$this->relationLoaded('stats')) {
+            return (int) $this->stats()->sum('fouls');
+        }
+        return (int) $this->stats->sum('fouls');
     }
 
     // AVERAGE CALCULATIONS FOR ALL MATCHES
 
-    // average successful passes (all matches)
+    // average successful passes (all matches) - FIXED
     public function getAvgSuccPassesAttribute() {
-        return round($this->stats()->avg('succ_passes') ?? 0, 2);
+        if (!$this->relationLoaded('stats')) {
+            $avg = $this->stats()->avg('succ_passes');
+            return $avg ? round($avg, 2) : 0;
+        }
+        
+        $avg = $this->stats->avg('succ_passes');
+        return $avg ? round($avg, 2) : 0;
     }
 
-    // average successful ground duels (all matches)
+    // average successful ground duels (all matches) - FIXED
     public function getAvgSuccGroundDuelsAttribute() {
-        return round($this->stats()->avg('succ_ground_duels') ?? 0, 2);
+        if (!$this->relationLoaded('stats')) {
+            $avg = $this->stats()->avg('succ_ground_duels');
+            return $avg ? round($avg, 2) : 0;
+        }
+        
+        $avg = $this->stats->avg('succ_ground_duels');
+        return $avg ? round($avg, 2) : 0;
     }
 
-    // average successful aerial duels (all matches)
+    // average successful aerial duels (all matches) - FIXED
     public function getAvgSuccAerialDuelsAttribute() {
-        return round($this->stats()->avg('succ_aerial_duels') ?? 0, 2);
+        if (!$this->relationLoaded('stats')) {
+            $avg = $this->stats()->avg('succ_aerial_duels');
+            return $avg ? round($avg, 2) : 0;
+        }
+        
+        $avg = $this->stats->avg('succ_aerial_duels');
+        return $avg ? round($avg, 2) : 0;
     }
 
-    // average successful dribbles (all matches)
+    // average successful dribbles (all matches) - FIXED
     public function getAvgSuccDribblesAttribute() {
-        return round($this->stats()->avg('succ_dribbles') ?? 0, 2);
+        if (!$this->relationLoaded('stats')) {
+            $avg = $this->stats()->avg('succ_dribbles');
+            return $avg ? round($avg, 2) : 0;
+        }
+        
+        $avg = $this->stats->avg('succ_dribbles');
+        return $avg ? round($avg, 2) : 0;
     }
 
     // STATS FOR SPECIFIC MATCH
@@ -121,7 +183,10 @@ class Player extends Model
      * Get player stats for a specific match
      */
     public function getStatsForMatch($matchId) {
-        return $this->stats()->where('match_id', $matchId)->first();
+        if (!$this->relationLoaded('stats')) {
+            return $this->stats()->where('match_id', $matchId)->first();
+        }
+        return $this->stats->where('match_id', $matchId)->first();
     }
 
     /**
@@ -212,7 +277,11 @@ class Player extends Model
      * Get total stats for multiple matches
      */
     public function getStatsForMatches(array $matchIds) {
-        $stats = $this->stats()->whereIn('match_id', $matchIds)->get();
+        if (!$this->relationLoaded('stats')) {
+            $stats = $this->stats()->whereIn('match_id', $matchIds)->get();
+        } else {
+            $stats = $this->stats->whereIn('match_id', $matchIds);
+        }
         
         return [
             'goals' => $stats->sum('goals') ?? 0,
@@ -238,31 +307,42 @@ class Player extends Model
      * Get all match statistics with match details
      */
     public function getAllMatchStats() {
-        return $this->stats()
-            ->with('match') // assuming you have a Match model
-            ->whereNotNull('start_minute')
-            ->whereNotNull('end_minute')
-            ->whereRaw('end_minute - start_minute > 0')
-            ->orderBy('match_id')
-            ->get()
-            ->map(function($stat) {
-                return [
-                    'match_id' => $stat->match_id,
-                    'minutes_played' => max(0, $stat->end_minute - $stat->start_minute),
-                    'goals' => $stat->goals ?? 0,
-                    'assists' => $stat->assists ?? 0,
-                    'yellow_cards' => $stat->yellow_cards ?? 0,
-                    'red_cards' => $stat->red_cards ?? 0,
-                    'succ_passes' => $stat->succ_passes ?? 0,
-                    'succ_ground_duels' => $stat->succ_ground_duels ?? 0,
-                    'succ_aerial_duels' => $stat->succ_aerial_duels ?? 0,
-                    'succ_dribbles' => $stat->succ_dribbles ?? 0,
-                    'saves' => $stat->saves ?? 0,
-                    'tackles' => $stat->tackles ?? 0,
-                    'interceptions' => $stat->interceptions ?? 0,
-                    'clearances' => $stat->clearances ?? 0,
-                    'fouls' => $stat->fouls ?? 0,
-                ];
-            });
+        if (!$this->relationLoaded('stats')) {
+            $stats = $this->stats()
+                ->with('match')
+                ->whereNotNull('start_minute')
+                ->whereNotNull('end_minute')
+                ->whereRaw('end_minute - start_minute > 0')
+                ->orderBy('match_id')
+                ->get();
+        } else {
+            $stats = $this->stats
+                ->whereNotNull('start_minute')
+                ->whereNotNull('end_minute')
+                ->filter(function($stat) {
+                    return $stat->end_minute - $stat->start_minute > 0;
+                })
+                ->sortBy('match_id');
+        }
+
+        return $stats->map(function($stat) {
+            return [
+                'match_id' => $stat->match_id,
+                'minutes_played' => max(0, $stat->end_minute - $stat->start_minute),
+                'goals' => $stat->goals ?? 0,
+                'assists' => $stat->assists ?? 0,
+                'yellow_cards' => $stat->yellow_cards ?? 0,
+                'red_cards' => $stat->red_cards ?? 0,
+                'succ_passes' => $stat->succ_passes ?? 0,
+                'succ_ground_duels' => $stat->succ_ground_duels ?? 0,
+                'succ_aerial_duels' => $stat->succ_aerial_duels ?? 0,
+                'succ_dribbles' => $stat->succ_dribbles ?? 0,
+                'saves' => $stat->saves ?? 0,
+                'tackles' => $stat->tackles ?? 0,
+                'interceptions' => $stat->interceptions ?? 0,
+                'clearances' => $stat->clearances ?? 0,
+                'fouls' => $stat->fouls ?? 0,
+            ];
+        });
     }
 }

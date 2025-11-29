@@ -143,7 +143,7 @@
             <div class="lineup-section">
                 <h3 class="text-xl font-bold mb-4 flex items-center justify-between">
                     <span>{{ $match->homeClub->name }} Lineup</span>
-                    <span class="formation-badge">4-3-3</span>
+                    {{-- <span class="formation-badge">4-3-3</span> --}}
                 </h3>
                 
                 <h4 class="font-semibold text-gray-700 mb-3">Starting XI</h4>
@@ -185,7 +185,7 @@
             <div class="lineup-section">
                 <h3 class="text-xl font-bold mb-4 flex items-center justify-between">
                     <span>{{ $match->awayClub->name }} Lineup</span>
-                    <span class="formation-badge">4-4-2</span>
+                    {{-- <span class="formation-badge">4-4-2</span> --}}
                 </h3>
                 
                 <h4 class="font-semibold text-gray-700 mb-3">Starting XI</h4>

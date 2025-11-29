@@ -55,10 +55,10 @@ class MatchController extends Controller
             return $lineup->role === 'sub' && $lineup->player->club_id === $match->away_club_id;
         });
 
-        // Get match statistics
+        // Get match statistics - FIXED: Pass team scores to getTeamStats
         $matchStats = [
-            'home' => $this->getTeamStats($match->home_club_id, $id),
-            'away' => $this->getTeamStats($match->away_club_id, $id)
+            'home' => $this->getTeamStats($match->home_club_id, $id, $match->home_score),
+            'away' => $this->getTeamStats($match->away_club_id, $id, $match->away_score)
         ];
 
         // Add match-specific stats from the matches table
@@ -88,7 +88,7 @@ class MatchController extends Controller
         ));
     }
 
-    private function getTeamStats($clubId, $matchId)
+    private function getTeamStats($clubId, $matchId, $teamScore)
     {
         // Get all players from the club who played in this match
         $players = \App\Models\Player::where('club_id', $clubId)
@@ -101,11 +101,11 @@ class MatchController extends Controller
             ->get();
 
         $teamStats = [
-            'goals' => 0,
+            'goals' => $teamScore, // Use the actual match score instead of summing player goals
             'assists' => 0,
             'shots' => 0,
             'shots_on_target' => 0,
-            'possession' => 50, // Default value, will be overridden from matches table
+            'possession' => 50,
             'pass_accuracy' => 0,
             'fouls' => 0,
             'yellow_cards' => 0,
@@ -116,12 +116,13 @@ class MatchController extends Controller
 
         $totalPassAccuracy = 0;
         $playersWithPassStats = 0;
+        $totalAssists = 0;
 
         foreach ($players as $player) {
             $stat = $player->stats->first();
             if ($stat) {
-                $teamStats['goals'] += $stat->goals ?? 0;
-                $teamStats['assists'] += $stat->assists ?? 0;
+                // Only sum assists, not goals (goals come from match score)
+                $totalAssists += $stat->assists ?? 0;
                 $teamStats['fouls'] += $stat->fouls ?? 0;
                 $teamStats['yellow_cards'] += $stat->yellow_cards ?? 0;
                 $teamStats['red_cards'] += $stat->red_cards ?? 0;
@@ -133,6 +134,9 @@ class MatchController extends Controller
                 }
             }
         }
+
+        // Set assists (ensure it doesn't exceed goals)
+        $teamStats['assists'] = min($totalAssists, $teamScore);
 
         // Calculate average pass accuracy
         if ($playersWithPassStats > 0) {
