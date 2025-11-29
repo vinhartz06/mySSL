@@ -91,10 +91,10 @@
     <div class="max-w-6xl mx-auto w-full px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         <div class="stat-item">
             <div class="stat-number">10</div>
-            <p class="text-gray-500">Teams</p>
+            <p class="text-gray-500">Clubs</p>
         </div>
         <div class="stat-item">
-            <div class="stat-number">200+</div>
+            <div class="stat-number">200</div>
             <p class="text-gray-500">Active Players</p>
         </div>
         <div class="stat-item">
@@ -102,7 +102,7 @@
             <p class="text-gray-500">Matches</p>
         </div>
         <div class="stat-item">
-            <div class="stat-number">1000+</div>
+            <div class="stat-number">200+</div>
             <p class="text-gray-500">Users</p>
         </div>
     </div>

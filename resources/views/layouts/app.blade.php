@@ -23,48 +23,135 @@
         width: 100%;
         z-index: 2000;
         transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-        background-color: rgba(74, 20, 140, 0.3);
+        background-color: rgba(74, 20, 140, 0.95);
         backdrop-filter: blur(5px);
     }
 
     .navbar-scrolled {
-        background-color: rgba(74, 20, 140, 0.9);
+        background-color: rgba(74, 20, 140, 0.7);
         backdrop-filter: blur(10px);
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Mobile menu animation */
+    .mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        background-color: rgba(74, 20, 140, 0.95);
+    }
+
+    .mobile-menu.active {
+        max-height: 500px;
+    }
+
+    /* Hamburger menu animation */
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
     }
 </style>
 
 <body class="bg-gray-100">
     <nav class="navbar-custom text-white">
-        <div class="max-w-6xl mx-auto flex items-center justify-between py-4 px-4">
-            <a href="{{ route('home') }}" class="text-xl font-semibold flex items-center gap-2">
-                <i class="fas fa-futbol"></i> mySSL
-            </a>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-3">
+                <!-- Logo -->
+                <a href="{{ route('home') }}" class="text-lg sm:text-xl font-semibold flex items-center gap-2">
+                    <i class="fas fa-futbol"></i> 
+                    <span class="hidden xs:inline">mySSL</span>
+                </a>
 
-            <div class="hidden md:flex items-center gap-6">
-                <a href="{{ route('home') }}" class="hover:text-gray-200 transition {{ request()->routeIs('home') ? 'font-bold' : '' }}">Home</a>
-                <a href="{{ route('standings') }}" class="hover:text-gray-200 transition {{ request()->routeIs('standings') ? 'font-bold' : '' }}">Standings</a>
-                <a href="{{ route('clubs.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('clubs.*') ? 'font-bold' : '' }}">Clubs</a>
-            </div>
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center gap-8">
+                    <a href="{{ route('home') }}" class="hover:text-gray-200 transition {{ request()->routeIs('home') ? 'font-bold' : '' }}">Home</a>
+                    <a href="{{ route('standings') }}" class="hover:text-gray-200 transition {{ request()->routeIs('standings') ? 'font-bold' : '' }}">Standings</a>
+                    <a href="{{ route('clubs.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('clubs.*') ? 'font-bold' : '' }}">Clubs</a>
+                </div>
 
-            @auth
-            <div class="flex items-center gap-4">
-                <span class="text-white">
-                    Halo, {{ auth()->user()->name }}
-                </span>
-                <button type="submit" class="border border-white text-white px-3 py-1 rounded hover:bg-white hover:text-purple-800 transition">
-                    Logout
+                <!-- Desktop Auth Buttons -->
+                <div class="hidden lg:flex items-center gap-4">
+                    @auth
+                    <span class="text-white text-sm xl:text-base truncate max-w-[150px]">
+                        Halo, {{ auth()->user()->name }}
+                    </span>
+                    <button type="submit" class="border border-white text-white px-3 py-1.5 rounded text-sm hover:bg-white hover:text-purple-800 transition whitespace-nowrap">
+                        Logout
+                    </button>
+                    @else
+                    <a href="#" class="border border-white text-white px-3 py-1.5 rounded text-sm hover:bg-white hover:text-purple-800 transition whitespace-nowrap">
+                        Login
+                    </a>
+                    <a href="#" class="bg-white text-purple-800 px-3 py-1.5 rounded text-sm hover:bg-gray-200 transition whitespace-nowrap">
+                        Register
+                    </a>
+                    @endauth
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden hamburger flex flex-col justify-center items-center w-10 h-10" id="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
             </div>
-            @else
-            <div class="flex items-center gap-3">
-                <a href="{{ route('login') }}" class="border border-white text-white px-3 py-1 rounded hover:bg-white hover:text-purple-800 transition">
-                    Login
-                </a>
-                <a href="{{ route('register') }}" class="bg-white text-purple-800 px-3 py-1 rounded hover:bg-gray-200 transition">
-                    Register
-                </a>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu lg:hidden" id="mobile-menu">
+                <div class="py-4 space-y-3 border-t border-purple-600">
+                    <!-- Mobile Navigation Links -->
+                    <a href="{{ route('home') }}" class="block py-2 px-4 hover:bg-purple-700 rounded transition {{ request()->routeIs('home') ? 'font-bold bg-purple-700' : '' }}">
+                        Home
+                    </a>
+                    <a href="{{ route('standings') }}" class="block py-2 px-4 hover:bg-purple-700 rounded transition {{ request()->routeIs('standings') ? 'font-bold bg-purple-700' : '' }}">
+                        Standings
+                    </a>
+                    <a href="{{ route('clubs.index') }}" class="block py-2 px-4 hover:bg-purple-700 rounded transition {{ request()->routeIs('clubs.*') ? 'font-bold bg-purple-700' : '' }}">
+                        Clubs
+                    </a>
+
+                    <!-- Mobile Auth Section -->
+                    <div class="pt-3 border-t border-purple-600">
+                        @auth
+                        <div class="px-4 py-2">
+                            <p class="text-sm text-gray-200 mb-3">Halo, {{ auth()->user()->name }}</p>
+                            <button type="submit" class="w-full border border-white text-white px-3 py-2 rounded hover:bg-white hover:text-purple-800 transition">
+                                Logout
+                            </button>
+                        </div>
+                        @else
+                        <div class="px-4 space-y-2">
+                            <a href="#" class="block w-full text-center border border-white text-white px-3 py-2 rounded hover:bg-white hover:text-purple-800 transition">
+                                Login
+                            </a>
+                            <a href="#" class="block w-full text-center bg-white text-purple-800 px-3 py-2 rounded hover:bg-gray-200 transition">
+                                Register
+                            </a>
+                        </div>
+                        @endauth
+                    </div>
+                </div>
             </div>
-            @endauth
         </div>
     </nav>
 
@@ -72,19 +159,48 @@
         @yield('content')
     </main>
 
-    <footer class="bg-[#4A148C] text-white py-4 mt-5">
-        <div class="max-w-6xl mx-auto text-center">
-            <p>&copy; 2025/2026 mySSL - Soegija Super League</p>
+    <footer class="bg-[#4A148C] text-white py-6 sm:py-8 mt-5">
+        <div class="max-w-6xl mx-auto text-center px-4">
+            <p class="text-sm sm:text-base">&copy; 2025/2026 mySSL - Soegija Super League</p>
         </div>
     </footer>
 
     <script>
+        // Scroll navbar effect
         document.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar-custom');
             if (window.scrollY > 50) { 
                 navbar.classList.add('navbar-scrolled');
             } else {
                 navbar.classList.remove('navbar-scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideMenu = mobileMenu.contains(event.target);
+            const isClickOnButton = mobileMenuBtn.contains(event.target);
+            
+            if (!isClickInsideMenu && !isClickOnButton && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            }
+        });
+
+        // Close mobile menu when window is resized to desktop size
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                mobileMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
             }
         });
     </script>
