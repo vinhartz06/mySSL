@@ -39,7 +39,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($validated)) {
             $request->session()->regenerate();
-            return redirect()->route('home');
+            return redirect()->intended('/');
+
+            // after login, redirect to previous page
+            // if no previous page stored, redirect to /
         } 
 
         throw ValidationException::withMessages([
