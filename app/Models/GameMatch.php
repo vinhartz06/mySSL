@@ -27,11 +27,22 @@ class GameMatch extends Model
     protected $fillable = [
         'home_club_id',
         'away_club_id',
+        'matchday',
         'match_date',
         'venue',
         'status',
         'home_score',
         'away_score',
+        'home_shots',
+        'away_shots',
+        'home_shots_on_target',
+        'away_shots_on_target',
+        'home_offsides',
+        'away_offsides',
+        'home_corners',
+        'away_corners',
+        'home_possession',
+        'away_possession',
     ];
 
     /**
@@ -43,6 +54,16 @@ class GameMatch extends Model
         'match_date' => 'datetime',
         'home_score' => 'integer',
         'away_score' => 'integer',
+        'home_shots' => 'integer',
+        'away_shots' => 'integer',
+        'home_shots_on_target' => 'integer',
+        'away_shots_on_target' => 'integer',
+        'home_offsides' => 'integer',
+        'away_offsides' => 'integer',
+        'home_corners' => 'integer',
+        'away_corners' => 'integer',
+        'home_possession' => 'decimal:2',
+        'away_possession' => 'decimal:2',
     ];
 
     // get home club
@@ -188,6 +209,26 @@ class GameMatch extends Model
         }
 
         return 0;
+    }
+
+    // Get total shots for the match
+    public function getTotalShotsAttribute(): int {
+        return ($this->home_shots ?? 0) + ($this->away_shots ?? 0);
+    }
+
+    // Get total shots on target for the match
+    public function getTotalShotsOnTargetAttribute(): int {
+        return ($this->home_shots_on_target ?? 0) + ($this->away_shots_on_target ?? 0);
+    }
+
+    // Get total corners for the match
+    public function getTotalCornersAttribute(): int {
+        return ($this->home_corners ?? 0) + ($this->away_corners ?? 0);
+    }
+
+    // Get total offsides for the match
+    public function getTotalOffsidesAttribute(): int {
+        return ($this->home_offsides ?? 0) + ($this->away_offsides ?? 0);
     }
 
     /**

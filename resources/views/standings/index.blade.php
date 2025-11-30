@@ -14,7 +14,7 @@
     }
     
     .position-1 {
-        background-color: #FFD700 !important;
+        background-color: #FFED4E !important;
         color: #000;
         font-weight: bold;
     }
@@ -26,7 +26,7 @@
     }
     
     .position-3 {
-        background-color: #CD7F32 !important;
+        background-color: #D4A574 !important;
         color: #000;
         font-weight: bold;
     }
@@ -253,6 +253,10 @@
                     <div class="w-3 h-3 sm:w-4 sm:h-4 bg-gray-400 rounded"></div>
                     <span>Runner-up</span>
                 </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 sm:w-4 sm:h-4 bg-orange-300 rounded"></div>
+                    <span>Second runner-up</span>
+                </div>
             </div>
         </div>
 
@@ -267,9 +271,9 @@
                         <div class="text-sm sm:text-base text-gray-600">{{ $mostWins ?? 0 }} wins</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-lg sm:text-xl md:text-2xl font-bold text-purple-800 mb-2">Most Goals</div>
+                        <div class="text-lg sm:text-xl md:text-2xl font-bold text-purple-800 mb-2">Best Attack</div>
                         <div class="text-base sm:text-lg font-semibold">{{ $mostGoalsClub ?? 'N/A' }}</div>
-                        <div class="text-sm sm:text-base text-gray-600">{{ $mostGoals ?? 0 }} goals</div>
+                        <div class="text-sm sm:text-base text-gray-600">{{ $mostGoals ?? 0 }} goals scored</div>
                     </div>
                     <div class="text-center">
                         <div class="text-lg sm:text-xl md:text-2xl font-bold text-purple-800 mb-2">Best Defense</div>

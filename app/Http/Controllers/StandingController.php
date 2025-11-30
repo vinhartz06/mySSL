@@ -28,18 +28,22 @@ class StandingController extends Controller {
         }
 
         // Calculate most wins
-        $mostWinsStanding = Standing::orderBy('won', 'desc')->first();
+        $mostWinsStanding = Standing::orderBy('won', 'desc')
+            ->orderBy('goal_diff', 'desc')
+            ->first();
         $mostWins = $mostWinsStanding->won ?? 0;
         $mostWinsClub = $mostWinsStanding->club->name ?? 'N/A';
 
         // Calculate most goals
-        $mostGoalsStanding = Standing::orderBy('goals_for', 'desc')->first();
+        $mostGoalsStanding = Standing::orderBy('goals_for', 'desc')
+            ->orderBy('goal_diff', 'desc')
+            ->first();
         $mostGoals = $mostGoalsStanding->goals_for ?? 0;
         $mostGoalsClub = $mostGoalsStanding->club->name ?? 'N/A';
 
         // Calculate best defense (least goals conceded)
-        $bestDefenseStanding = Standing::where('goals_against', '>', 0)
-            ->orderBy('goals_against', 'asc')
+        $bestDefenseStanding = Standing::orderBy('goals_against', 'asc')
+            ->orderBy('goal_diff', 'desc')
             ->first();
         $bestDefense = $bestDefenseStanding->goals_against ?? 0;
         $bestDefenseClub = $bestDefenseStanding->club->name ?? 'N/A';

@@ -85,8 +85,9 @@
                 <!-- Desktop Navigation -->
                 <div class="hidden lg:flex items-center gap-8">
                     <a href="{{ route('home') }}" class="hover:text-gray-200 transition {{ request()->routeIs('home') ? 'font-bold' : '' }}">Home</a>
-                    <a href="{{ route('standings') }}" class="hover:text-gray-200 transition {{ request()->routeIs('standings') ? 'font-bold' : '' }}">Standings</a>
                     <a href="{{ route('clubs.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('clubs.*') ? 'font-bold' : '' }}">Clubs</a>
+                    <a href="{{ route('matches.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('matches.*') ? 'font-bold' : '' }}">Matches</a>
+                    <a href="{{ route('standings') }}" class="hover:text-gray-200 transition {{ request()->routeIs('standings') ? 'font-bold' : '' }}">Standings</a>
                 </div>
 
                 <!-- Desktop Auth Buttons -->
@@ -123,11 +124,14 @@
                     <a href="{{ route('home') }}" class="block py-2 px-4 hover:bg-purple-700 rounded transition {{ request()->routeIs('home') ? 'font-bold bg-purple-700' : '' }}">
                         Home
                     </a>
-                    <a href="{{ route('standings') }}" class="block py-2 px-4 hover:bg-purple-700 rounded transition {{ request()->routeIs('standings') ? 'font-bold bg-purple-700' : '' }}">
-                        Standings
-                    </a>
                     <a href="{{ route('clubs.index') }}" class="block py-2 px-4 hover:bg-purple-700 rounded transition {{ request()->routeIs('clubs.*') ? 'font-bold bg-purple-700' : '' }}">
                         Clubs
+                    </a>
+                    <a href="{{ route('matches.index') }}" class="block py-2 px-4 hover:bg-purple-700 rounded transition {{ request()->routeIs('matches.*') ? 'font-bold bg-purple-700' : '' }}">
+                        Matches
+                    </a>
+                    <a href="{{ route('standings') }}" class="block py-2 px-4 hover:bg-purple-700 rounded transition {{ request()->routeIs('standings') ? 'font-bold bg-purple-700' : '' }}">
+                        Standings
                     </a>
 
                     <!-- Mobile Auth Section -->
