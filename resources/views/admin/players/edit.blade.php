@@ -41,12 +41,10 @@
                 <label for="position" class="block text-sm font-medium text-gray-700">Position</label>
                 <select name="position" id="position" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                     <option value="">Select Position</option>
-                    <option value="Goalkeeper" {{ $player->position == 'Goalkeeper' ? 'selected' : '' }}>Goalkeeper</option>
-                    <option value="Defender" {{ $player->position == 'Defender' ? 'selected' : '' }}>Defender</option>
-                    <option value="Midfielder" {{ $player->position == 'Midfielder' ? 'selected' : '' }}>Midfielder</option>
-                    <option value="Forward" {{ $player->position == 'Forward' ? 'selected' : '' }}>Forward</option>
-                    <option value="Striker" {{ $player->position == 'Striker' ? 'selected' : '' }}>Striker</option>
-                    <option value="Winger" {{ $player->position == 'Winger' ? 'selected' : '' }}>Winger</option>
+                    <option value="GK" {{ $player->position == 'GK' ? 'selected' : '' }}>GK</option>
+                    <option value="DF" {{ $player->position == 'DF' ? 'selected' : '' }}>DF</option>
+                    <option value="MF" {{ $player->position == 'MF' ? 'selected' : '' }}>MF</option>
+                    <option value="FW" {{ $player->position == 'FW' ? 'selected' : '' }}>FW</option>
                 </select>
                 @error('position')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

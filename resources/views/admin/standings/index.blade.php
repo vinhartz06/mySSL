@@ -2,6 +2,20 @@
 
 @section('title', 'Manage Standings')
 
+@push('scripts')
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                timer: 2000,
+                showConfirmButton: false
+            })
+        </script>
+    @endif
+@endpush
+
 @push('styles')
     <style>
         .position-1 {

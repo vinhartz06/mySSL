@@ -2,6 +2,20 @@
 
 @section('title', 'Manage Clubs')
 
+@push('scripts')
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                timer: 2000,
+                showConfirmButton: false
+            })
+        </script>
+    @endif
+@endpush
+
 @section('content')
 <div class="mb-6">
     <h1 class="text-2xl font-bold text-gray-800">Manage Clubs</h1>

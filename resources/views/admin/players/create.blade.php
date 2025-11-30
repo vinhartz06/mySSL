@@ -40,12 +40,10 @@
                 <label for="position" class="block text-sm font-medium text-gray-700">Position</label>
                 <select name="position" id="position" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                     <option value="">Select Position</option>
-                    <option value="Goalkeeper" {{ old('position') == 'Goalkeeper' ? 'selected' : '' }}>Goalkeeper</option>
-                    <option value="Defender" {{ old('position') == 'Defender' ? 'selected' : '' }}>Defender</option>
-                    <option value="Midfielder" {{ old('position') == 'Midfielder' ? 'selected' : '' }}>Midfielder</option>
-                    <option value="Forward" {{ old('position') == 'Forward' ? 'selected' : '' }}>Forward</option>
-                    <option value="Striker" {{ old('position') == 'Striker' ? 'selected' : '' }}>Striker</option>
-                    <option value="Winger" {{ old('position') == 'Winger' ? 'selected' : '' }}>Winger</option>
+                    <option value="GK" {{ old('position') == 'GK' ? 'selected' : '' }}>GK</option>
+                    <option value="DF" {{ old('position') == 'DF' ? 'selected' : '' }}>DF</option>
+                    <option value="MF" {{ old('position') == 'MF' ? 'selected' : '' }}>MF</option>
+                    <option value="FW" {{ old('position') == 'FW' ? 'selected' : '' }}>FW</option>
                 </select>
                 @error('position')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -62,7 +60,7 @@
         </div>
 
         <!-- Optional: Additional player information -->
-        <div class="border-t pt-6 mt-6">
+        {{-- <div class="border-t pt-6 mt-6">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Additional Information (Optional)</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -81,7 +79,7 @@
                 <label for="bio" class="block text-sm font-medium text-gray-700">Bio/Description</label>
                 <textarea name="bio" id="bio" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">{{ old('bio') }}</textarea>
             </div>
-        </div>
+        </div> --}}
 
         <div class="flex justify-end space-x-3 pt-6 border-t">
             <a href="{{ route('admin.players.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">Cancel</a>
@@ -91,11 +89,17 @@
 </div>
 
 <script>
-    // Simple validation to ensure jersey number is between 1-99
+    // simple validation to ensure jersey number is between 1-99
     document.getElementById('jersey_no').addEventListener('change', function() {
         const value = parseInt(this.value);
+
         if (value < 1 || value > 99) {
-            alert('Jersey number must be between 1 and 99');
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Number',
+                text: 'Jersey number must be between 1 and 99',
+            });
+
             this.value = '';
         }
     });

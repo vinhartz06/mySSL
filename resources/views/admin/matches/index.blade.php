@@ -2,6 +2,46 @@
 
 @section('title', 'Manage Matches')
 
+@push('scripts')
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                timer: 2000,
+                showConfirmButton: false
+            })
+        </script>
+    @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.show_confirm').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    let form = this.closest('form');
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "This match will be permanently deleted!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#3085d6",
+                        confirmButtonText: "Yes, delete it",
+                        cancelButtonText: "Cancel"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+@endpush
+
 @section('content')
 <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-gray-800">Manage Matches</h1>
@@ -48,7 +88,7 @@
                     <form action="{{ route('admin.matches.destroy', $match) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure?')">Delete</button>
+                        <button type="submit" class="text-red-600 hover:text-red-900 show_confirm">Delete</button>
                     </form>
                 </td>
             </tr>
