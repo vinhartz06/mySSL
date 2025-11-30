@@ -25,9 +25,19 @@ Route::middleware('guest')->group(function() {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
 });
 
-// auth
+// must login
 Route::middleware('auth')->group(function() {
     Route::get('/matches/{id}', [MatchController::class, 'show'])->name('matches.show');
     Route::get('/matches/matchday/{matchday}', [MatchController::class, 'byMatchday'])->name('matches.by-matchday');
     Route::get('/clubs/{club}', [ClubController::class, 'show'])->name('clubs.show');
+});
+
+// must club manager
+Route::middleware('is_club_manager')->group(function() {
+
+});
+
+// must admin
+Route::middleware('is_admin')->group(function() {
+
 });
