@@ -16,11 +16,14 @@ class ClubController extends Controller
 
     public function edit(Club $club)
     {
-        // Load players with their stats for the edit view
-        $club->load(['players' => function($query) {
-            $query->with(['stats']);
-        }]);
-        
+        // Add players_count + load players with their stats
+        $club->loadCount('players')
+            ->load([
+                'players' => function ($query) {
+                    $query->with('stats');
+                }
+            ]);
+
         return view('admin.clubs.edit', compact('club'));
     }
 
