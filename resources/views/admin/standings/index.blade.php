@@ -2,6 +2,32 @@
 
 @section('title', 'Manage Standings')
 
+@push('styles')
+    <style>
+        .position-1 {
+            background-color: #FFED4E !important;
+            color: #000;
+            font-weight: bold;
+        }
+    
+        .position-2 {
+            background-color: #C0C0C0 !important;
+            color: #000;
+            font-weight: bold;
+        }
+    
+        .position-3 {
+            background-color: #D4A574 !important;
+            color: #000;
+            font-weight: bold;
+        }
+    
+        .table-header {
+            background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 100%);
+        }
+    </style>
+@endpush
+
 @section('content')
 <div class="mb-6">
     <h1 class="text-2xl font-bold text-gray-800">League Standings</h1>
@@ -11,40 +37,41 @@
 <div class="bg-white rounded-lg shadow overflow-hidden">
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+            <thead class="table-header">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Club</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Played</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Won</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Drawn</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lost</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GF</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GA</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GD</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">Position</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">Club</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">Played</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">Won</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">Drawn</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">Lost</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">GF</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">GA</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">GD</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">Points</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white bold uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach($standings as $index => $standing)
-                <tr class="{{ $index < 4 ? 'bg-green-50' : ($index >= count($standings) - 3 ? 'bg-red-50' : '') }}">
+                <tr class="
+                    {{ $index + 1 == 1 ? 'position-1' : '' }}
+                    {{ $index + 1 == 2 ? 'position-2' : '' }}
+                    {{ $index + 1 == 3 ? 'position-3' : '' }}
+                ">
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <span class="text-sm font-medium text-gray-900">{{ $index + 1 }}</span>
                             @if($index == 0)
-                                <i class="fas fa-trophy text-yellow-500 ml-2"></i>
-                            @elseif($index < 4)
-                                <i class="fas fa-arrow-up text-green-500 ml-2"></i>
-                            @elseif($index >= count($standings) - 3)
-                                <i class="fas fa-arrow-down text-red-500 ml-2"></i>
+                                <i class="fas fa-trophy text-yellow-900 ml-2"></i>
                             @endif
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center">
-                                <i class="fas fa-users text-gray-500"></i>
+                                {{-- <i class="fas fa-users text-gray-500"></i> --}}
+                                ⚽
                             </div>
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">{{ $standing->club->name }}</div>
@@ -78,18 +105,18 @@
     <div class="bg-white rounded-lg shadow p-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">Standings Legend</h3>
         <div class="space-y-3">
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-green-100 border border-green-300 rounded mr-3"></div>
-                <span class="text-sm text-gray-600">Champions League Qualification (Top 4)</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-red-100 border border-red-300 rounded mr-3"></div>
-                <span class="text-sm text-gray-600">Relegation Zone (Bottom 3)</span>
-            </div>
-            <div class="flex items-center">
-                <i class="fas fa-trophy text-yellow-500 mr-3"></i>
-                <span class="text-sm text-gray-600">League Champion</span>
-            </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 sm:w-4 sm:h-4 bg-yellow-400 rounded"></div>
+                    <span>Champion</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 sm:w-4 sm:h-4 bg-gray-400 rounded"></div>
+                    <span>Runner-up</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 sm:w-4 sm:h-4 bg-orange-300 rounded"></div>
+                    <span>Second runner-up</span>
+                </div>
         </div>
     </div>
 

@@ -119,13 +119,8 @@
     <nav class="admin-navbar text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between py-3">
-                <!-- Logo and Menu Toggle -->
-                <div class="flex items-center gap-4">
-                    <button class="lg:hidden hamburger flex flex-col justify-center items-center w-10 h-10" id="sidebar-toggle">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
+                <!-- Logo -->
+                <div class="flex items-center">
                     <a href="{{ route('admin.dashboard') }}" class="text-lg sm:text-xl font-semibold flex items-center gap-2">
                         <i class="fas fa-crown"></i> 
                         <span class="hidden xs:inline">Admin Panel</span>
@@ -134,17 +129,18 @@
 
                 <!-- Desktop Navigation -->
                 <div class="hidden lg:flex items-center gap-8">
-                    <a href="{{ route('home') }}" class="hover:text-gray-200 transition {{ request()->routeIs('admin.dashboard') ? 'font-bold' : '' }}">Home</a>
+                    <a href="{{ route('home') }}" class="hover:text-gray-200 transition">Public Site</a>
                     <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-200 transition {{ request()->routeIs('admin.dashboard') ? 'font-bold' : '' }}">Dashboard</a>
                     <a href="{{ route('admin.matches.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('admin.matches.*') ? 'font-bold' : '' }}">Matches</a>
                     <a href="{{ route('admin.clubs.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('admin.clubs.*') ? 'font-bold' : '' }}">Clubs</a>
                     <a href="{{ route('admin.players.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('admin.players.*') ? 'font-bold' : '' }}">Players</a>
+                    <a href="{{ route('admin.standings.index') }}" class="hover:text-gray-200 transition {{ request()->routeIs('admin.players.*') ? 'font-bold' : '' }}">Standings</a>
                 </div>
 
-                <!-- User Menu -->
-                <div class="flex items-center gap-4">
+                <!-- Desktop User Menu -->
+                <div class="hidden lg:flex items-center gap-4">
                     <span class="text-white text-sm xl:text-base truncate max-w-[150px]">
-                        Hello Admin!
+                        Hello, Admin!
                     </span>
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
@@ -153,26 +149,68 @@
                         </button>
                     </form>
                 </div>
+
+                <!-- Mobile Menu Button - Moved to right -->
+                <button class="lg:hidden hamburger flex flex-col justify-center items-center w-10 h-10 ml-auto" id="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
 
             <!-- Mobile Menu -->
             <div class="mobile-menu lg:hidden" id="mobile-menu">
                 <div class="py-4 space-y-3 border-t border-red-600">
-                    <a href="{{ route('home') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.dashboard') ? 'font-bold bg-red-700' : '' }}">
-                        Home
+                    <!-- Public Site Link -->
+                    <a href="{{ route('home') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition flex items-center gap-2">
+                        <i class="fas fa-globe w-4"></i>
+                        Public Site
                     </a>
-                    <a href="{{ route('admin.dashboard') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.dashboard') ? 'font-bold bg-red-700' : '' }}">
+                    
+                    <!-- Admin Navigation Links -->
+                    <a href="{{ route('admin.dashboard') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.dashboard') ? 'font-bold bg-red-700' : '' }} flex items-center gap-2">
+                        <i class="fas fa-tachometer-alt w-4"></i>
                         Dashboard
                     </a>
-                    <a href="{{ route('admin.matches.index') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.matches.*') ? 'font-bold bg-red-700' : '' }}">
+                    <a href="{{ route('admin.matches.index') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.matches.*') ? 'font-bold bg-red-700' : '' }} flex items-center gap-2">
+                        <i class="fas fa-calendar-alt w-4"></i>
                         Matches
                     </a>
-                    <a href="{{ route('admin.clubs.index') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.clubs.*') ? 'font-bold bg-red-700' : '' }}">
+                    <a href="{{ route('admin.clubs.index') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.clubs.*') ? 'font-bold bg-red-700' : '' }} flex items-center gap-2">
+                        <i class="fas fa-users w-4"></i>
                         Clubs
                     </a>
-                    <a href="{{ route('admin.players.index') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.players.*') ? 'font-bold bg-red-700' : '' }}">
+                    <a href="{{ route('admin.players.index') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.players.*') ? 'font-bold bg-red-700' : '' }} flex items-center gap-2">
+                        <i class="fas fa-user w-4"></i>
                         Players
                     </a>
+                    <a href="{{ route('admin.standings.index') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition {{ request()->routeIs('admin.standings.*') ? 'font-bold bg-red-700' : '' }} flex items-center gap-2">
+                        <i class="fas fa-trophy w-4"></i>
+                        Standings
+                    </a>
+
+                    <!-- Quick Actions -->
+                    <div class="pt-2 border-t border-red-500">
+                        <a href="{{ route('admin.matches.create') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition flex items-center gap-2">
+                            <i class="fas fa-plus w-4"></i>
+                            Add Match
+                        </a>
+                        <a href="{{ route('admin.players.create') }}" class="block py-2 px-4 hover:bg-red-700 rounded transition flex items-center gap-2">
+                            <i class="fas fa-user-plus w-4"></i>
+                            Add Player
+                        </a>
+                    </div>
+
+                    <!-- Mobile Logout Section -->
+                    <div class="pt-3 border-t border-red-600">
+                        <form action="{{ route('logout') }}" method="POST" class="w-full">
+                            @csrf
+                            <button type="submit" class="w-full text-left py-2 px-4 hover:bg-red-700 rounded transition flex items-center gap-2">
+                                <i class="fas fa-sign-out-alt w-4"></i>
+                                Logout
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -218,6 +256,15 @@
                     Add Player
                 </a>
             </div>
+
+            <!-- Public Site Link in Sidebar -->
+            <div class="space-y-2">
+                <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Public Site</h3>
+                <a href="{{ route('home') }}" class="flex items-center gap-3 p-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded transition">
+                    <i class="fas fa-globe w-5"></i>
+                    View Public Site
+                </a>
+            </div>
         </div>
     </aside>
 
@@ -237,45 +284,55 @@
             }
         });
 
-        // Sidebar toggle for mobile
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebar = document.querySelector('.sidebar');
+        // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        sidebarToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            sidebarToggle.classList.toggle('active');
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
         });
-
-        // Mobile menu toggle
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', function() {
-                mobileMenu.classList.toggle('active');
-                mobileMenuBtn.classList.toggle('active');
-            });
-        }
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(event) {
-            if (window.innerWidth < 1024) {
-                const isClickInsideSidebar = sidebar.contains(event.target);
-                const isClickOnToggle = sidebarToggle.contains(event.target);
-                
-                if (!isClickInsideSidebar && !isClickOnToggle && sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                    sidebarToggle.classList.remove('active');
-                }
+            const isClickInsideMenu = mobileMenu.contains(event.target);
+            const isClickOnButton = mobileMenuBtn.contains(event.target);
+            
+            if (!isClickInsideMenu && !isClickOnButton && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
             }
         });
 
-        // Close sidebar when window is resized to desktop size
+        // Close mobile menu when window is resized to desktop size
         window.addEventListener('resize', function() {
             if (window.innerWidth >= 1024) {
-                sidebar.classList.remove('active');
-                sidebarToggle.classList.remove('active');
-                if (mobileMenu) mobileMenu.classList.remove('active');
-                if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            }
+        });
+
+        // Sidebar toggle for mobile (if you still want to keep sidebar functionality)
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                sidebarToggle.classList.toggle('active');
+            });
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth < 1024) {
+                const isClickInsideSidebar = sidebar.contains(event.target);
+                const isClickOnToggle = sidebarToggle ? sidebarToggle.contains(event.target) : false;
+                
+                if (!isClickInsideSidebar && !isClickOnToggle && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                    if (sidebarToggle) sidebarToggle.classList.remove('active');
+                }
             }
         });
     </script>
