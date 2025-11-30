@@ -12,8 +12,23 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
     body {
         font-family: 'Inter', sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
     }
 
     .navbar-custom {
@@ -30,11 +45,6 @@
     .navbar-scrolled {
         background-color: rgba(74, 20, 140, 0.7);
         backdrop-filter: blur(10px);
-    }
-
-    body, html {
-        margin: 0;
-        padding: 0;
     }
 
     /* Mobile menu animation */
@@ -70,6 +80,18 @@
     .hamburger.active span:nth-child(3) {
         transform: rotate(45deg) translate(-5px, -6px);
     }
+
+    /* Main content area */
+    main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Footer */
+    footer {
+        margin-top: auto;
+    }
 </style>
 
 <body class="bg-gray-100">
@@ -100,10 +122,10 @@
                         Logout
                     </button>
                     @else
-                    <a href="#" class="border border-white text-white px-3 py-1.5 rounded text-sm hover:bg-white hover:text-purple-800 transition whitespace-nowrap">
+                    <a href="{{ route('show.login') }}" class="border border-white text-white px-3 py-1.5 rounded text-sm hover:bg-white hover:text-purple-800 transition whitespace-nowrap">
                         Login
                     </a>
-                    <a href="#" class="bg-white text-purple-800 px-3 py-1.5 rounded text-sm hover:bg-gray-200 transition whitespace-nowrap">
+                    <a href="{{ route('show.register') }}" class="bg-white text-purple-800 px-3 py-1.5 rounded text-sm hover:bg-gray-200 transition whitespace-nowrap">
                         Register
                     </a>
                     @endauth
@@ -145,10 +167,10 @@
                         </div>
                         @else
                         <div class="px-4 space-y-2">
-                            <a href="#" class="block w-full text-center border border-white text-white px-3 py-2 rounded hover:bg-white hover:text-purple-800 transition">
+                            <a href="{{ route('show.login') }}" class="block w-full text-center border border-white text-white px-3 py-2 rounded hover:bg-white hover:text-purple-800 transition">
                                 Login
                             </a>
-                            <a href="#" class="block w-full text-center bg-white text-purple-800 px-3 py-2 rounded hover:bg-gray-200 transition">
+                            <a href="{{ route('show.register') }}" class="block w-full text-center bg-white text-purple-800 px-3 py-2 rounded hover:bg-gray-200 transition">
                                 Register
                             </a>
                         </div>
@@ -159,11 +181,11 @@
         </div>
     </nav>
 
-    <main class="min-h-screen">
+    <main>
         @yield('content')
     </main>
 
-    <footer class="bg-[#4A148C] text-white py-6 sm:py-8 mt-5">
+    <footer class="bg-[#4A148C] text-white py-6 sm:py-8">
         <div class="max-w-6xl mx-auto text-center px-4">
             <p class="text-sm sm:text-base">&copy; 2025/2026 mySSL - Soegija Super League</p>
         </div>
