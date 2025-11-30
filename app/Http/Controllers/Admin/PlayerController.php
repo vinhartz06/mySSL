@@ -12,7 +12,8 @@ class PlayerController extends Controller
     public function index()
     {
         $players = Player::with('club')->paginate(10);
-        return view('admin.players.index', compact('players'));
+        $allPlayers = Player::all();
+        return view('admin.players.index', compact('players', 'allPlayers'));
     }
 
     public function create()

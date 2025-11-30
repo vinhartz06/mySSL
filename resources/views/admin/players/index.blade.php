@@ -132,6 +132,8 @@
             <div class="ml-4">
                 <p class="text-sm font-medium text-gray-600">Total Players</p>
                 <p class="text-2xl font-semibold text-gray-900">{{ $players->total() }}</p>
+                {{-- total = all from db
+                count = total in page --}}
             </div>
         </div>
     </div>
@@ -143,7 +145,7 @@
             </div>
             <div class="ml-4">
                 <p class="text-sm font-medium text-gray-600">Total Goals</p>
-                <p class="text-2xl font-semibold text-gray-900">{{ $players->sum('total_goals') }}</p>
+                <p class="text-2xl font-semibold text-gray-900">{{ $allPlayers->sum('total_goals') }}</p>
             </div>
         </div>
     </div>
@@ -155,7 +157,7 @@
             </div>
             <div class="ml-4">
                 <p class="text-sm font-medium text-gray-600">Total Assists</p>
-                <p class="text-2xl font-semibold text-gray-900">{{ $players->sum('total_assists') }}</p>
+                <p class="text-2xl font-semibold text-gray-900">{{ $allPlayers->sum('total_assists') }}</p>
             </div>
         </div>
     </div>
@@ -167,7 +169,7 @@
             </div>
             <div class="ml-4">
                 <p class="text-sm font-medium text-gray-600">Avg Goals/Player</p>
-                <p class="text-2xl font-semibold text-gray-900">{{ round($players->avg('total_goals'), 1) }}</p>
+                <p class="text-2xl font-semibold text-gray-900">{{ round($allPlayers->avg('total_goals'), 1) }}</p>
             </div>
         </div>
     </div>
