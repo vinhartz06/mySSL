@@ -195,7 +195,10 @@
 
     <footer class="bg-[#4A148C] text-white py-6 sm:py-8">
         <div class="max-w-6xl mx-auto text-center px-4">
-            <p class="text-sm sm:text-base">&copy; 2025/2026 mySSL - Soegija Super League</p>
+        <p class="text-sm sm:text-base">&copy; 2025/2026 MySSL — Soegija Super League</p>
+        <p class="text-sm sm:text-base">
+            Crafted with ⚽ & ❤️ by <a href="https://jonathan-vincent-portofolio.vercel.app/" target="_blank" class="font-bold hover:underline">Jonathan Vincent Hartono</a> — 24.K1.0065
+        </p>
         </div>
     </footer>
 

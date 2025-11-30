@@ -55,11 +55,17 @@
         color: white;
     }
     
-    .status-live {
+    .status-cancelled {
+        background-color: #EF4444;
+        color: white;
+        /* animation: pulse 2s infinite; */
+    }
+
+    /* .status-live {
         background-color: #EF4444;
         color: white;
         animation: pulse 2s infinite;
-    }
+    } */
     
     @keyframes pulse {
         0% { opacity: 1; }
@@ -113,11 +119,9 @@
                                 <span class="match-status 
                                     {{ $match->status === 'fulltime' ? 'status-completed' : '' }}
                                     {{ in_array($match->status, ['scheduled', 'postponed']) ? 'status-upcoming' : '' }}
-                                    {{ $match->status === 'live' ? 'status-live' : '' }}">
+                                    {{ $match->status === 'cancelled' ? 'status-cancelled' : '' }}">
                                     @if($match->status === 'fulltime')
                                         FT
-                                    @elseif($match->status === 'live')
-                                        LIVE
                                     @else
                                         {{ ucfirst($match->status) }}
                                     @endif

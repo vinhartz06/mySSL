@@ -71,6 +71,28 @@
         font-size: 24px;
     }
 
+    .dashboard-card {
+        background: linear-gradient(135deg, #4A148C 0%, #6B21A8 100%);
+        color: white;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        border: none;
+        overflow: hidden;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(74, 20, 140, 0.3);
+    }
+
+    .admin-dashboard-card {
+        background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+    }
+
+    .club-dashboard-card {
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    }
+
     @media (max-width: 640px) {
         .hero-section h1 {
             font-size: 2rem;
@@ -111,11 +133,11 @@
     <div class="max-w-6xl mx-auto w-full px-4">
         <div class="flex flex-col lg:flex-row items-center" style="padding-top: 80px; padding-bottom: 80px;">
             <div class="lg:w-1/2 mb-8 lg:mb-0">
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Soegija Super League</h1>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">My Soegija Super League</h1>
                 <p class="text-base sm:text-lg mb-4">The most comprehensive platform for following the Soegija Super League. Get match schedules, updated standings, and detailed statistics of your favorite players.</p>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a href="#features" class="bg-white text-purple-800 px-6 py-3 rounded hover:bg-gray-200 transition text-center">Key Features</a>
-                    <a href="#matches" class="border border-white text-white px-6 py-3 rounded hover:bg-white hover:text-purple-800 transition text-center">Schedule</a>
+                    <a href="#matches" class="border border-white text-white px-6 py-3 rounded hover:bg-white hover:text-purple-800 transition text-center">Recent Matches</a>
                 </div>
             </div>
             <div class="lg:w-1/2 text-center">
@@ -125,23 +147,19 @@
     </div>
 </section>
 
-<section class="stats-section">
-    <div class="max-w-6xl mx-auto w-full px-4 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-        <div class="stat-item">
-            <div class="stat-number">10</div>
-            <p class="text-gray-500 text-sm sm:text-base">Clubs</p>
+<section class="stats-section py-10">
+    <div class="max-w-6xl mx-auto w-full px-4 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+        <div class="stat-item bg-white shadow rounded-lg p-6">
+            <div class="stat-number text-4xl font-bold">10</div>
+            <p class="text-gray-500 text-sm sm:text-base mt-1">Clubs</p>
         </div>
-        <div class="stat-item">
-            <div class="stat-number">200</div>
-            <p class="text-gray-500 text-sm sm:text-base">Active Players</p>
+        <div class="stat-item bg-white shadow rounded-lg p-6">
+            <div class="stat-number text-4xl font-bold">200</div>
+            <p class="text-gray-500 text-sm sm:text-base mt-1">Active Players</p>
         </div>
-        <div class="stat-item">
-            <div class="stat-number">90</div>
-            <p class="text-gray-500 text-sm sm:text-base">Matches</p>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">200+</div>
-            <p class="text-gray-500 text-sm sm:text-base">Users</p>
+        <div class="stat-item bg-white shadow rounded-lg p-6">
+            <div class="stat-number text-4xl font-bold">90</div>
+            <p class="text-gray-500 text-sm sm:text-base mt-1">Matches</p>
         </div>
     </div>
 </section>
@@ -150,7 +168,7 @@
     <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-12">
             <h2 class="text-3xl sm:text-4xl font-bold mb-2">Key Features</h2>
-            <p class="text-gray-500">Everything you need in ONE platform</p>
+            <p class="text-gray-500">Everything you need in <strong>ONE</strong> platform</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -298,5 +316,79 @@
         </div>
     </div>
 </section> --}}
+
+<!-- dashboard access cards for admin and club manager -->
+@auth
+    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'club')
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Management Dashboard</h2>
+                <p class="text-gray-600 mt-2">Access your management panel</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @if(auth()->user()->role === 'admin')
+                <!-- Admin Dashboard Card -->
+                <a href="{{ route('admin.dashboard') }}" class="dashboard-card admin-dashboard-card p-6 text-center block">
+                    <div class="mb-4">
+                        <i class="fas fa-crown text-4xl mb-3 text-white opacity-90"></i>
+                        <h3 class="text-xl font-bold mb-2">Admin Dashboard</h3>
+                        <p class="text-white opacity-90 text-sm mb-4">
+                            Manage matches, clubs, players, and league standings
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <span class="bg-white text-red-600 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-gray-100 transition">
+                            Go to Admin Panel
+                        </span>
+                    </div>
+                </a>
+                @endif
+
+                {{-- @if(auth()->user()->role === 'club')
+                <!-- Club Dashboard Card -->
+                <a href="{{ route('club.dashboard') }}" class="dashboard-card club-dashboard-card p-6 text-center block">
+                    <div class="mb-4">
+                        <i class="fas fa-users text-4xl mb-3 text-white opacity-90"></i>
+                        <h3 class="text-xl font-bold mb-2">Club Dashboard</h3>
+                        <p class="text-white opacity-90 text-sm mb-4">
+                            Manage your club's players, lineups, and statistics
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <span class="bg-white text-green-600 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-gray-100 transition">
+                            Go to Club Panel
+                        </span>
+                    </div>
+                </a>
+                @endif --}}
+
+                <!-- quick stats -->
+                <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Quick Stats</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Your Role:</span>
+                            <span class="font-semibold capitalize 
+                                {{ auth()->user()->role === 'admin' ? 'text-red-600' : 'text-green-600' }}">
+                                {{ auth()->user()->role }}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Logged in as:</span>
+                            <span class="font-semibold text-gray-800">{{ auth()->user()->name }}</span>
+                        </div>
+                        {{-- <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Last login:</span>
+                            <span class="text-sm text-gray-500">{{ auth()->user()->updated_at->diffForHumans() }}</span>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @endif
+@endauth
 
 @endsection
