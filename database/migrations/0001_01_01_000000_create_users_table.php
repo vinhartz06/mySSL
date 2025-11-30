@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('role')->default('user');
+            $table->string('club')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -47,3 +49,6 @@ return new class extends Migration
         Schema::dropIfExists('sessions');
     }
 };
+
+
+// php artisan migrate:refresh --path=database/migrations/0001_01_01_000000_create_users_table.php
