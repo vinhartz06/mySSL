@@ -237,7 +237,7 @@
     .error-message {
         color: #dc2626;
         font-size: 13px;
-        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
         display: flex;
         align-items: center;
         gap: 0.3rem;
@@ -298,6 +298,13 @@
             <div class="auth-body">
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
+
+                    @error('credentials')
+                        <p class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ $message }}
+                        </p>
+                    @enderror
                     
                     <div class="form-group">
                         <label for="name" class="form-label">
@@ -310,17 +317,16 @@
                                 name="name" 
                                 class="form-input"
                                 placeholder="Enter your username"
-                                value="{{ old('name') }}"
                                 required
                             >
                             <i class="fas fa-user form-input-icon"></i>
                         </div>
-                        @error('name')
+                        {{-- @error('name')
                             <p class="error-message">
                                 <i class="fas fa-exclamation-circle"></i>
                                 {{ $message }}
                             </p>
-                        @enderror
+                        @enderror --}}
                     </div>
 
                     <div class="form-group">
@@ -338,12 +344,12 @@
                             >
                             <i class="fas fa-lock form-input-icon"></i>
                         </div>
-                        @error('password')
+                        {{-- @error('password')
                             <p class="error-message">
                                 <i class="fas fa-exclamation-circle"></i>
                                 {{ $message }}
                             </p>
-                        @enderror
+                        @enderror --}}
                     </div>
 
                     <button type="submit" class="btn-primary">
