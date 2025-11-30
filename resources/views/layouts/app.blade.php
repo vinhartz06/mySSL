@@ -116,11 +116,14 @@
                 <div class="hidden lg:flex items-center gap-4">
                     @auth
                     <span class="text-white text-sm xl:text-base truncate max-w-[150px]">
-                        Halo, {{ auth()->user()->name }}
+                        Hello, {{ auth()->user()->name }} 👋
                     </span>
-                    <button type="submit" class="border border-white text-white px-3 py-1.5 rounded text-sm hover:bg-white hover:text-purple-800 transition whitespace-nowrap">
-                        Logout
-                    </button>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="border border-white text-white px-3 py-1.5 rounded text-sm hover:bg-white hover:text-purple-800 transition whitespace-nowrap">
+                            Logout
+                        </button>
+                    </form>
                     @else
                     <a href="{{ route('show.login') }}" class="border border-white text-white px-3 py-1.5 rounded text-sm hover:bg-white hover:text-purple-800 transition whitespace-nowrap">
                         Login
@@ -160,10 +163,13 @@
                     <div class="pt-3 border-t border-purple-600">
                         @auth
                         <div class="px-4 py-2">
-                            <p class="text-sm text-gray-200 mb-3">Halo, {{ auth()->user()->name }}</p>
-                            <button type="submit" class="w-full border border-white text-white px-3 py-2 rounded hover:bg-white hover:text-purple-800 transition">
-                                Logout
-                            </button>
+                            <p class="text-sm text-gray-200 mb-3">Hello, {{ auth()->user()->name }} 👋</p>
+                            <form action="{{ route('logout') }}" method="POST" class="w-full">
+                                @csrf
+                                <button type="submit" class="w-full border border-white text-white px-3 py-2 rounded hover:bg-white hover:text-purple-800 transition">
+                                    Logout
+                                </button>
+                            </form>
                         </div>
                         @else
                         <div class="px-4 space-y-2">
