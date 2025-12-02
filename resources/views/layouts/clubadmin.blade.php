@@ -186,6 +186,14 @@
                         Players
                     </a>
 
+                    <!-- Quick Actions -->
+                    <div class="pt-2 border-t border-green-500">
+                        <a href="{{ route('clubadmin.players.create') }}" class="block py-2 px-4 hover:bg-green-700 rounded transition flex items-center gap-2">
+                            <i class="fas fa-user-plus w-4"></i>
+                            Add Player
+                        </a>
+                    </div>
+
                     <!-- Mobile Logout Section -->
                     <div class="pt-3 border-t border-green-600">
                         <form action="{{ route('logout') }}" method="POST" class="w-full">

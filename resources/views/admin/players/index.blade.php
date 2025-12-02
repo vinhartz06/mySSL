@@ -94,7 +94,7 @@
                                 {{ $player->total_goals }} goals
                             </span>
                             <span class="flex items-center">
-                                <i class="fas fa-assist text-blue-500 mr-1"></i>
+                                <i class="fas fa-hand-holding text-blue-500 mr-1"></i>
                                 {{ $player->total_assists }} assists
                             </span>
                             <span class="flex items-center">
