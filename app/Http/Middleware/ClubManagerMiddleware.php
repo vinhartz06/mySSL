@@ -23,8 +23,8 @@ class ClubManagerMiddleware
 
         $user = Auth::user();
 
-        // check if club manager or clubadmin
-        if($user->role !== 'club' && $user->role !== 'clubadmin') {
+        // check if club admin
+        if($user->role !== 'club') {
             return redirect()->route('show.login')->with('error', 'Unauthorized access.');
         }
 

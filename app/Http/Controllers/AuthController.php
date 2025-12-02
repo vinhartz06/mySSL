@@ -44,6 +44,10 @@ class AuthController extends Controller
                 return redirect()->route('admin.dashboard');
             }
 
+            if(Auth::user()->role === 'club') {
+                return redirect()->route('clubadmin.dashboard');
+            }
+
             return redirect()->intended('/');
 
             // after login, redirect to previous page

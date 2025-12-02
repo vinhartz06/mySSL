@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/clubs/{club}', [ClubController::class, 'show'])->name('clubs.show');
 });
 
-// must club manager / clubadmin
+// must club admin
 Route::middleware('is_club_manager')->prefix('clubadmin')->name('clubadmin.')->group(function() {
     Route::get('/dashboard', [ClubAdminController::class, 'dashboard'])->name('dashboard');
     
