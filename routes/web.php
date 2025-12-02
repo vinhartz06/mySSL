@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MatchController as AdminMatchController;
 use App\Http\Controllers\Admin\ClubController as AdminClubController;
 use App\Http\Controllers\Admin\PlayerController as AdminPlayerController;
 use App\Http\Controllers\Admin\StandingController as AdminStandingController;
+use App\Http\Controllers\ClubAdmin\ClubAdminController;
 
 // public
 Route::get('/', function () {
@@ -37,9 +38,29 @@ Route::middleware('auth')->group(function() {
     Route::get('/clubs/{club}', [ClubController::class, 'show'])->name('clubs.show');
 });
 
-// must club manager
-Route::middleware('is_club_manager')->group(function() {
-
+// must club admin
+Route::middleware('is_club_manager')->prefix('clubadmin')->name('clubadmin.')->group(function() {
+    Route::get('/dashboard', [ClubAdminController::class, 'dashboard'])->name('dashboard');
+    
+    // club details
+    Route::get('/club', [ClubAdminController::class, 'showClub'])->name('club.show');
+    
+    // matches
+    Route::get('/matches/upcoming', [ClubAdminController::class, 'upcomingMatches'])->name('matches.upcoming');
+    Route::get('/matches/{match}', [ClubAdminController::class, 'showMatch'])->name('matches.show');
+    Route::post('/matches/{match}/lineup', [ClubAdminController::class, 'storeLineup'])->name('matches.lineup.store');
+    
+    // players
+    Route::get('/players', [ClubAdminController::class, 'players'])->name('players.index');
+    Route::get('/players/create', [ClubAdminController::class, 'createPlayer'])->name('players.create');
+    Route::post('/players', [ClubAdminController::class, 'storePlayer'])->name('players.store');
+    Route::get('/players/{player}/edit', [ClubAdminController::class, 'editPlayer'])->name('players.edit');
+    Route::put('/players/{player}', [ClubAdminController::class, 'updatePlayer'])->name('players.update');
+    Route::delete('/players/{player}', [ClubAdminController::class, 'destroyPlayer'])->name('players.destroy');
+    
+    // statistics
+    Route::get('/matches/{match}/stats', [ClubAdminController::class, 'matchStats'])->name('stats.match');
+    Route::post('/matches/{match}/stats', [ClubAdminController::class, 'storeMatchStats'])->name('stats.store');
 });
 
 // must admin
