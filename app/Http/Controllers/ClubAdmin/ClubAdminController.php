@@ -146,8 +146,13 @@ class ClubAdminController extends Controller
             'substitutes.*' => 'nullable|exists:players,id',
         ]);
 
+        // Filter out empty/null values from substitutes
+        $substitutes = array_filter($validated['substitutes'] ?? [], function($value) {
+            return !empty($value);
+        });
+
         // Check all players belong to the club
-        $allPlayerIds = array_merge($validated['starters'], $validated['substitutes'] ?? []);
+        $allPlayerIds = array_merge($validated['starters'], $substitutes);
         $clubPlayerIds = $club->players()->pluck('id')->toArray();
 
         foreach ($allPlayerIds as $playerId) {
@@ -172,16 +177,12 @@ class ClubAdminController extends Controller
         }
 
         // Create substitute lineup
-        if (isset($validated['substitutes'])) {
-            foreach ($validated['substitutes'] as $playerId) {
-                if ($playerId) {
-                    Lineup::create([
-                        'match_id' => $match->id,
-                        'player_id' => $playerId,
-                        'role' => 'sub',
-                    ]);
-                }
-            }
+        foreach ($substitutes as $playerId) {
+            Lineup::create([
+                'match_id' => $match->id,
+                'player_id' => $playerId,
+                'role' => 'sub',
+            ]);
         }
 
         return redirect()->route('clubadmin.matches.show', $match)
