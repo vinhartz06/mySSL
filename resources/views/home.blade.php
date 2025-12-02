@@ -346,9 +346,9 @@
                 </a>
                 @endif
 
-                {{-- @if(auth()->user()->role === 'club')
+                @if(auth()->user()->role === 'club')
                 <!-- Club Dashboard Card -->
-                <a href="{{ route('club.dashboard') }}" class="dashboard-card club-dashboard-card p-6 text-center block">
+                <a href="{{ route('clubadmin.dashboard') }}" class="dashboard-card club-dashboard-card p-6 text-center block">
                     <div class="mb-4">
                         <i class="fas fa-users text-4xl mb-3 text-white opacity-90"></i>
                         <h3 class="text-xl font-bold mb-2">Club Dashboard</h3>
@@ -362,7 +362,7 @@
                         </span>
                     </div>
                 </a>
-                @endif --}}
+                @endif
 
                 <!-- quick stats -->
                 <div class="bg-white rounded-lg shadow p-6 border border-gray-200">

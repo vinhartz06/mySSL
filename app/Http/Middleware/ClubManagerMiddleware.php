@@ -21,9 +21,16 @@ class ClubManagerMiddleware
             return redirect()->route('show.login')->with('error', 'Please login to access this page.');
         }
 
-        // check if club manager
-        if(Auth::user()->role !== 'club') {
+        $user = Auth::user();
+
+        // check if club manager or clubadmin
+        if($user->role !== 'club' && $user->role !== 'clubadmin') {
             return redirect()->route('show.login')->with('error', 'Unauthorized access.');
+        }
+
+        // check if user has a club assigned
+        if(!$user->club_id) {
+            return redirect()->route('show.login')->with('error', 'No club assigned to your account.');
         }
 
         return $next($request);

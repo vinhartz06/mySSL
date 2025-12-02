@@ -40,8 +40,8 @@ class Stat extends Model
     /**
      * Get the match that owns the stat.
      */
-    // public function match()
-    // {
-    //     return $this->belongsTo(Match::class);
-    // }
+    public function match()
+    {
+        return $this->belongsTo(GameMatch::class, 'match_id');
+    }
 }

@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
             'email' => 'vinhartz06@example.com',
             'password' => Hash::make('vincent123'),
             'role' => 'user',
-            'club' => null,
+            'club_id' => null,
         ]);
 
         User::create([
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'email' => 'fikom_admin@example.com',
             'password' => Hash::make('fikom123'),
             'role' => 'club',
-            'club' => 'FIKOM',
+            'club_id' => 5,
         ]);
 
         User::create([
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'email' => 'fpsi_admin@example.com',
             'password' => Hash::make('fpsi1234'),
             'role' => 'club',
-            'club' => 'FPSI',
+            'club_id' => 4,
         ]);
 
         User::create([
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => Hash::make('admin123'),
             'role' => 'admin',
-            'club' => null,
+            'club_id' => null,
         ]);
     }
 }
