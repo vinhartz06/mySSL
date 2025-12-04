@@ -93,6 +93,18 @@
         background: linear-gradient(135deg, #059669 0%, #10B981 100%);
     }
 
+    .status-completed {
+        background-color: #10B981;
+        color: white;
+    }
+
+    .match-status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
     @media (max-width: 640px) {
         .hero-section h1 {
             font-size: 2rem;
@@ -196,72 +208,89 @@
     </div>
 </section>
 
-{{--! edit this upcoming matches --}}
-{{-- <section id="matches" class="py-12 bg-gray-100">
+<section id="matches" class="py-12 bg-gray-100">
     <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-2">Upcoming Matches</h2>
-            <p class="text-gray-500">Don't miss this week's exciting matches!</p>
+            <h2 class="text-3xl sm:text-4xl font-bold mb-2">Recent Matches</h2>
+            <p class="text-gray-500">Latest completed matches from the league</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="match-card">
-                <div class="flex flex-col sm:flex-row justify-between mb-2 gap-2">
-                    <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs sm:text-sm text-center sm:text-left">Soegija Super League</span>
-                    <span class="text-gray-500 text-xs sm:text-sm text-center sm:text-right">Saturday, January 3 2026</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="text-center flex-1">
-                        <div class="team-logo mx-auto mb-2">⚽</div>
-                        <strong class="text-sm sm:text-base">FIKOM</strong>
+            @forelse($recentMatches as $match)
+            <a href="{{ route('matches.show', $match->id) }}" class="block">
+                <div class="match-card">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="match-status 
+                            {{ $match->status === 'fulltime' ? 'status-completed' : '' }}
+                            {{ in_array($match->status, ['scheduled', 'postponed']) ? 'status-upcoming' : '' }}
+                            {{ $match->status === 'cancelled' ? 'status-cancelled' : '' }}">
+                            @if($match->status === 'fulltime')
+                                FT
+                            @else
+                                {{ ucfirst($match->status) }}
+                            @endif
+                        </span>
+                        <span class="text-gray-500 text-sm">
+                            {{ $match->match_date->format('H:i') }} • {{ $match->venue }}
+                        </span>
                     </div>
-                    <div class="text-center px-2 sm:px-3">
-                        <div class="text-base sm:text-lg font-bold">VS</div>
-                        <small class="text-gray-500 text-xs">17:00 WIB</small>
-                    </div>
-                    <div class="text-center flex-1">
-                        <div class="team-logo mx-auto mb-2">⚽</div>
-                        <strong class="text-sm sm:text-base">FPsi</strong>
-                    </div>
-                </div>
-                <div class="mt-3 text-center">
-                    <small class="text-gray-500 text-xs sm:text-sm"><i class="fas fa-map-marker-alt"></i> Stadion Utama GBK</small>
-                </div>
-            </div>
 
-            <div class="match-card">
-                <div class="flex flex-col sm:flex-row justify-between mb-2 gap-2">
-                    <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs sm:text-sm text-center sm:text-left">Soegija Super League</span>
-                    <span class="text-gray-500 text-xs sm:text-sm text-center sm:text-right">Sunday, January 4 2026</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="text-center flex-1">
-                        <div class="team-logo mx-auto mb-2">⚽</div>
-                        <strong class="text-sm sm:text-base">FHK</strong>
+                    <div class="flex justify-between items-center">
+                        <!-- Home Team -->
+                        <div class="text-center flex-1">
+                            <div class="team-logo mx-auto mb-2">⚽</div>
+                            <strong class="text-lg">{{ $match->homeClub->name ?? 'TBD' }}</strong>
+                            @if($match->isPlayed())
+                                <div class="text-2xl font-bold mt-1">{{ $match->home_score }}</div>
+                            @endif
+                        </div>
+
+                        <!-- VS / Score -->
+                        <div class="text-center px-4">
+                            @if($match->isPlayed())
+                                <div class="text-xl font-bold">VS</div>
+                                <div class="text-sm text-gray-500">Final Score</div>
+                            @else
+                                <div class="text-2xl font-bold">VS</div>
+                                <div class="text-sm text-gray-500">{{ $match->match_date->format('H:i') }}</div>
+                            @endif
+                        </div>
+
+                        <!-- Away Team -->
+                        <div class="text-center flex-1">
+                            <div class="team-logo mx-auto mb-2">⚽</div>
+                            <strong class="text-lg">{{ $match->awayClub->name ?? 'TBD' }}</strong>
+                            @if($match->isPlayed())
+                                <div class="text-2xl font-bold mt-1">{{ $match->away_score }}</div>
+                            @endif
+                        </div>
                     </div>
-                    <div class="text-center px-2 sm:px-3">
-                        <div class="text-base sm:text-lg font-bold">VS</div>
-                        <small class="text-gray-500 text-xs">15:30 WIB</small>
-                    </div>
-                    <div class="text-center flex-1">
-                        <div class="team-logo mx-auto mb-2">⚽</div>
-                        <strong class="text-sm sm:text-base">FITL</strong>
-                    </div>
+
+                    @if($match->isPlayed() && $match->winner)
+                        <div class="text-center mt-3 text-sm text-green-600 font-semibold">
+                            🏆 {{ $match->winner->name }} wins!
+                        </div>
+                    @elseif($match->isPlayed() && $match->isDraw())
+                        <div class="text-center mt-3 text-sm text-gray-600 font-semibold">
+                            🤝 Match ended in a draw
+                        </div>
+                    @endif
                 </div>
-                <div class="mt-3 text-center">
-                    <small class="text-gray-500 text-xs sm:text-sm"><i class="fas fa-map-marker-alt"></i> Stadion Kanjuruhan</small>
-                </div>
+            </a>
+            @empty
+            <div class="col-span-1 lg:col-span-2 text-center py-8">
+                <p class="text-gray-500">No completed matches yet</p>
             </div>
+            @endforelse
         </div>
     </div>
-</section> --}}
+</section>
 
-{{--! edit this top goalscorers --}}
-{{-- <section class="py-12">
+<section class="py-12">
     <div class="max-w-4xl mx-auto px-4"> 
         <div class="text-center mb-12">
             <h2 class="text-3xl sm:text-4xl font-bold mb-2">Top Goalscorers</h2>
-            <p class="text-gray-500">Players with the most goals this season.</p>
+            <p class="text-gray-500">Players with the most goals this season</p>
         </div>
 
         <div class="overflow-x-auto">
@@ -275,47 +304,29 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse($topGoalscorers as $index => $stat)
                     <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                         <td class="py-3 px-2 sm:px-4 text-center">
-                            <span class="bg-yellow-400 text-black px-2 py-1 rounded font-semibold text-xs sm:text-sm">1</span>
+                            <span class="@if($index === 0) bg-yellow-400 @endif text-black px-2 py-1 rounded font-semibold text-xs sm:text-sm">{{ $index + 1 }}</span>
                         </td>
                         <td class="py-3 px-2 sm:px-4 text-sm sm:text-base">
-                            <strong>Jonathan Vincent Hartono</strong>
+                            <strong>{{ $stat['player']->name ?? 'N/A' }}</strong>
                         </td>
-                        <td class="py-3 px-2 sm:px-4 text-center text-gray-600 text-sm sm:text-base">FIKOM</td>
+                        <td class="py-3 px-2 sm:px-4 text-center text-gray-600 text-sm sm:text-base">{{ $stat['player']->club->name ?? 'N/A' }}</td>
                         <td class="py-3 px-2 sm:px-4 text-center">
-                            <span class="text-lg sm:text-xl font-bold text-blue-500">7 <i class="fas fa-futbol"></i></span>
+                            <span class="text-lg sm:text-xl font-bold text-blue-500">{{ $stat['total_goals'] }} <i class="fas fa-futbol"></i></span>
                         </td>
                     </tr>
-                    <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
-                        <td class="py-3 px-2 sm:px-4 text-center">
-                            <span class="bg-gray-400 text-black px-2 py-1 rounded font-semibold text-xs sm:text-sm">2</span>
-                        </td>
-                        <td class="py-3 px-2 sm:px-4 text-sm sm:text-base">
-                            <strong>Marko Simic</strong>
-                        </td>
-                        <td class="py-3 px-2 sm:px-4 text-center text-gray-600 text-sm sm:text-base">FLA</td>
-                        <td class="py-3 px-2 sm:px-4 text-center">
-                            <span class="text-lg sm:text-xl font-bold text-blue-500">5 <i class="fas fa-futbol"></i></span>
-                        </td>
+                    @empty
+                    <tr>
+                        <td colspan="4" class="py-6 text-center text-gray-500">No goalscorers yet</td>
                     </tr>
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="py-3 px-2 sm:px-4 text-center">
-                            <span class="bg-gray-400 text-black px-2 py-1 rounded font-semibold text-xs sm:text-sm">3</span>
-                        </td>
-                        <td class="py-3 px-2 sm:px-4 text-sm sm:text-base">
-                            <strong>Ilija Spasojevic</strong>
-                        </td>
-                        <td class="py-3 px-2 sm:px-4 text-center text-gray-600 text-sm sm:text-base">FPSI</td>
-                        <td class="py-3 px-2 sm:px-4 text-center">
-                            <span class="text-lg sm:text-xl font-bold text-blue-500">5 <i class="fas fa-futbol"></i></span>
-                        </td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-</section> --}}
+</section>
 
 <!-- dashboard access cards for admin and club manager -->
 @auth
