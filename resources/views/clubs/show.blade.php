@@ -298,12 +298,10 @@
                 <div class="mt-8">
                     <h3 class="text-2xl font-semibold mb-6 text-gray-800">About the Club</h3>
                     <p class="text-gray-600 mb-4 text-lg leading-relaxed">
-                        {{ $club->name }} is one of the prominent clubs in the Soegija Super League, 
-                        known for their dedication and competitive spirit in every match.
+                        {{ $club->name }} is one of the clubs in the Soegija Super League, known for their hard work and strong spirit in every game.
                     </p>
                     <p class="text-gray-600 text-lg leading-relaxed">
-                        Under the guidance of Coach {{ $club->coach }}, the team continues to strive 
-                        for excellence and aims to achieve remarkable results in the current season.
+                        Led by Coach {{ $club->coach }}, the team keeps working hard and aims to achieve great results this season.
                     </p>
                 </div>
             </div>
