@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\StandingController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\MatchController as AdminMatchController;
 use App\Http\Controllers\Admin\ClubController as AdminClubController;
@@ -13,9 +14,7 @@ use App\Http\Controllers\Admin\StandingController as AdminStandingController;
 use App\Http\Controllers\ClubAdmin\ClubAdminController;
 
 // public
-Route::get('/', function () {
-    return view('home');
-})->name("home");
+Route::get('/', [HomeController::class, 'index'])->name("home");
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
