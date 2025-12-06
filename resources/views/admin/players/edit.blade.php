@@ -16,7 +16,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700">Player Name</label>
-                <input type="text" name="name" id="name" value="{{ old('name', $player->name) }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="text" name="name" id="name" value="{{ old('name', $player->name) }}" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('name')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -24,7 +24,7 @@
 
             <div>
                 <label for="club_id" class="block text-sm font-medium text-gray-700">Club</label>
-                <select name="club_id" id="club_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <select name="club_id" id="club_id" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                     <option value="">Select Club</option>
                     @foreach($clubs as $club)
                         <option value="{{ $club->id }}" {{ $player->club_id == $club->id ? 'selected' : '' }}>{{ $club->name }}</option>
@@ -39,7 +39,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                 <label for="position" class="block text-sm font-medium text-gray-700">Position</label>
-                <select name="position" id="position" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <select name="position" id="position" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                     <option value="">Select Position</option>
                     <option value="GK" {{ $player->position == 'GK' ? 'selected' : '' }}>GK</option>
                     <option value="DF" {{ $player->position == 'DF' ? 'selected' : '' }}>DF</option>
@@ -53,7 +53,7 @@
 
             <div>
                 <label for="jersey_no" class="block text-sm font-medium text-gray-700">Jersey Number</label>
-                <input type="number" name="jersey_no" id="jersey_no" value="{{ old('jersey_no', $player->jersey_no) }}" min="1" max="99" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="number" name="jersey_no" id="jersey_no" value="{{ old('jersey_no', $player->jersey_no) }}" min="1" max="99" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('jersey_no')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror

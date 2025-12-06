@@ -16,7 +16,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700">Club Name</label>
-                <input type="text" name="name" id="name" value="{{ old('name', $club->name) }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="text" name="name" id="name" value="{{ old('name', $club->name) }}" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('name')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -24,7 +24,7 @@
 
             <div>
                 <label for="coach" class="block text-sm font-medium text-gray-700">Coach</label>
-                <input type="text" name="coach" id="coach" value="{{ old('coach', $club->coach) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="text" name="coach" id="coach" value="{{ old('coach', $club->coach) }}" class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('coach')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
