@@ -30,7 +30,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
             <div>
                 <label for="played" class="block text-sm font-medium text-gray-700">Matches Played</label>
-                <input type="number" name="played" id="played" value="{{ old('played', $standing->played) }}" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="number" name="played" id="played" value="{{ old('played', $standing->played) }}" min="0" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('played')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -38,7 +38,7 @@
 
             <div>
                 <label for="won" class="block text-sm font-medium text-gray-700">Won</label>
-                <input type="number" name="won" id="won" value="{{ old('won', $standing->won) }}" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="number" name="won" id="won" value="{{ old('won', $standing->won) }}" min="0" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('won')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -46,7 +46,7 @@
 
             <div>
                 <label for="draw" class="block text-sm font-medium text-gray-700">Drawn</label>
-                <input type="number" name="draw" id="draw" value="{{ old('draw', $standing->draw) }}" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="number" name="draw" id="draw" value="{{ old('draw', $standing->draw) }}" min="0" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('draw')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -54,7 +54,7 @@
 
             <div>
                 <label for="lost" class="block text-sm font-medium text-gray-700">Lost</label>
-                <input type="number" name="lost" id="lost" value="{{ old('lost', $standing->lost) }}" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="number" name="lost" id="lost" value="{{ old('lost', $standing->lost) }}" min="0" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('lost')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -65,7 +65,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
                 <label for="goals_for" class="block text-sm font-medium text-gray-700">Goals For</label>
-                <input type="number" name="goals_for" id="goals_for" value="{{ old('goals_for', $standing->goals_for) }}" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="number" name="goals_for" id="goals_for" value="{{ old('goals_for', $standing->goals_for) }}" min="0" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('goals_for')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -73,7 +73,7 @@
 
             <div>
                 <label for="goals_against" class="block text-sm font-medium text-gray-700">Goals Against</label>
-                <input type="number" name="goals_against" id="goals_against" value="{{ old('goals_against', $standing->goals_against) }}" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="number" name="goals_against" id="goals_against" value="{{ old('goals_against', $standing->goals_against) }}" min="0" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('goals_against')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -81,7 +81,7 @@
 
             <div>
                 <label for="goal_diff" class="block text-sm font-medium text-gray-700">Goal Difference</label>
-                <input type="number" name="goal_diff" id="goal_diff" value="{{ old('goal_diff', $standing->goal_diff) }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <input type="number" name="goal_diff" id="goal_diff" value="{{ old('goal_diff', $standing->goal_diff) }}" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
                 @error('goal_diff')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -90,7 +90,7 @@
 
         <div class="mb-6">
             <label for="points" class="block text-sm font-medium text-gray-700">Points</label>
-            <input type="number" name="points" id="points" value="{{ old('points', $standing->points) }}" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+            <input type="number" name="points" id="points" value="{{ old('points', $standing->points) }}" min="0" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
             @error('points')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror

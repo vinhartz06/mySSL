@@ -22,7 +22,7 @@ class MatchController extends Controller
     {
         $clubs = Club::all();
         $matchdays = range(1, 18);
-        $statuses = ['scheduled', 'postponed', 'fulltime', 'cancelled'];
+        $statuses = ['scheduled'];
 
         return view('admin.matches.create', compact('clubs', 'matchdays', 'statuses'));
     }

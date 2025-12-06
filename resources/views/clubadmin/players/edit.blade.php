@@ -16,7 +16,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700">Player Name</label>
-                <input type="text" name="name" id="name" value="{{ old('name', $player->name) }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                <input type="text" name="name" id="name" value="{{ old('name', $player->name) }}" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
                 @error('name')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -24,7 +24,7 @@
 
             <div>
                 <label for="position" class="block text-sm font-medium text-gray-700">Position</label>
-                <select name="position" id="position" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                <select name="position" id="position" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
                     <option value="">Select Position</option>
                     <option value="GK" {{ $player->position == 'GK' ? 'selected' : '' }}>GK - Goalkeeper</option>
                     <option value="DF" {{ $player->position == 'DF' ? 'selected' : '' }}>DF - Defender</option>
@@ -39,7 +39,7 @@
 
         <div class="mb-6">
             <label for="jersey_no" class="block text-sm font-medium text-gray-700">Jersey Number</label>
-            <input type="number" name="jersey_no" id="jersey_no" value="{{ old('jersey_no', $player->jersey_no) }}" min="1" max="99" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+            <input type="number" name="jersey_no" id="jersey_no" value="{{ old('jersey_no', $player->jersey_no) }}" min="1" max="99" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
             @error('jersey_no')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
@@ -49,10 +49,10 @@
         <div class="border-t pt-6 mt-6">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Player Statistics</h3>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
                 <div class="text-center p-4 bg-gray-50 rounded-lg">
                     <div class="text-2xl font-bold text-gray-900">{{ $player->matches_played }}</div>
-                    <div class="text-sm text-gray-600">Matches Played</div>
+                    <div class="text-sm text-gray-600">Matches</div>
                 </div>
                 
                 <div class="text-center p-4 bg-green-50 rounded-lg">
@@ -67,9 +67,16 @@
                 
                 <div class="text-center p-4 bg-yellow-50 rounded-lg">
                     <div class="text-2xl font-bold text-yellow-600">
-                        {{ $player->total_yellow_cards + $player->total_red_cards }}
+                        {{ $player->total_yellow_cards }}
                     </div>
-                    <div class="text-sm text-gray-600">Cards</div>
+                    <div class="text-sm text-gray-600">Yellows</div>
+                </div>
+
+                <div class="text-center p-4 bg-red-50 rounded-lg">
+                    <div class="text-2xl font-bold text-red-600">
+                        {{ $player->total_red_cards }}
+                    </div>
+                    <div class="text-sm text-gray-600">Reds</div>
                 </div>
             </div>
 

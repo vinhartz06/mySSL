@@ -15,7 +15,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700">Player Name</label>
-                <input type="text" name="name" id="name" value="{{ old('name') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                <input type="text" name="name" id="name" value="{{ old('name') }}" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
                 @error('name')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -23,7 +23,7 @@
 
             <div>
                 <label for="position" class="block text-sm font-medium text-gray-700">Position</label>
-                <select name="position" id="position" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                <select name="position" id="position" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
                     <option value="">Select Position</option>
                     <option value="GK" {{ old('position') == 'GK' ? 'selected' : '' }}>GK - Goalkeeper</option>
                     <option value="DF" {{ old('position') == 'DF' ? 'selected' : '' }}>DF - Defender</option>
@@ -38,7 +38,7 @@
 
         <div class="mb-6">
             <label for="jersey_no" class="block text-sm font-medium text-gray-700">Jersey Number</label>
-            <input type="number" name="jersey_no" id="jersey_no" value="{{ old('jersey_no') }}" min="1" max="99" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+            <input type="number" name="jersey_no" id="jersey_no" value="{{ old('jersey_no') }}" min="1" max="99" required class="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
             @error('jersey_no')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
