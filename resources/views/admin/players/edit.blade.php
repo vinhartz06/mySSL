@@ -64,10 +64,10 @@
         <div class="border-t pt-6 mt-6">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Player Statistics</h3>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
                 <div class="text-center p-4 bg-gray-50 rounded-lg">
                     <div class="text-2xl font-bold text-gray-900">{{ $player->matches_played }}</div>
-                    <div class="text-sm text-gray-600">Matches Played</div>
+                    <div class="text-sm text-gray-600">Matches</div>
                 </div>
                 
                 <div class="text-center p-4 bg-green-50 rounded-lg">
@@ -82,9 +82,16 @@
                 
                 <div class="text-center p-4 bg-yellow-50 rounded-lg">
                     <div class="text-2xl font-bold text-yellow-600">
-                        {{ $player->total_yellow_cards + $player->total_red_cards }}
+                        {{ $player->total_yellow_cards }}
                     </div>
-                    <div class="text-sm text-gray-600">Cards</div>
+                    <div class="text-sm text-gray-600">Yellows</div>
+                </div>
+
+                <div class="text-center p-4 bg-red-50 rounded-lg">
+                    <div class="text-2xl font-bold text-red-600">
+                        {{ $player->total_red_cards }}
+                    </div>
+                    <div class="text-sm text-gray-600">Reds</div>
                 </div>
             </div>
 
