@@ -12,11 +12,6 @@ use App\Http\Controllers\Admin\ClubController as AdminClubController;
 use App\Http\Controllers\Admin\PlayerController as AdminPlayerController;
 use App\Http\Controllers\Admin\StandingController as AdminStandingController;
 use App\Http\Controllers\ClubAdmin\ClubAdminController;
-use Symfony\Component\VarDumper\Caster\RedisCaster;
-
-Route::get('/', function() {
-    return redirect("https://jonathan-vincent-portofolio.vercel.app/");
-});
 
 Route::prefix('/ip')->group(function() {
     // public
