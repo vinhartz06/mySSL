@@ -71,5 +71,5 @@ jobs:
           php artisan optimize &&
 
           # Sync public assets to hosting public folder
-          rsync -av --delete ~/ip/public/ ~/public_html/ip/public/
+          rsync -av --delete ~/ip/public/ ~/public_html/public/
         "
