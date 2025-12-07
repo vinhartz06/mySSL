@@ -41,14 +41,14 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: php artisan test
 
+
   deploy:
     needs: laravel-tests
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     - name: Setup SSH
       run: |
@@ -60,7 +60,7 @@ jobs:
     - name: Deploy to DOMCLOUD
       run: |
         ssh -i ~/.ssh/id_ecdsa jonathanvincent@jonathanvincent.sgp.dom.my.id "
-          cd public_html &&
+          cd ~/ip &&
           git pull &&
           composer install --no-interaction --prefer-dist &&
           php artisan migrate --force &&
@@ -68,5 +68,8 @@ jobs:
           php artisan storage:link &&
           npm install &&
           npm run build &&
-          php artisan optimize
+          php artisan optimize &&
+
+          # Sync public assets to hosting public folder
+          rsync -av --delete ~/ip/public/ ~/public_html/ip/public/
         "
