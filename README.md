@@ -52,20 +52,32 @@ This project is built using **Laravel 11**.
 ---
 
 ## 📂 Project Structure
-app/
-├─ Http/
-│ ├─ Controllers/
-│ ├─ Middleware/
-├─ Models/
-database/
-├─ migrations/
-├─ seeders/
-public/
-resources/
-├─ views/
-routes/
-├─ web.php
 
+Simplified Laravel project structure used in this application:
+
+```text
+app/
+├── Http/
+│   ├── Controllers/        # Application controllers
+│   └── Middleware/         # Authentication & role middleware
+│
+├── Models/                 # Eloquent models
+│
+database/
+├── migrations/             # Database schema
+├── seeders/                # Initial data (roles, clubs, users)
+│
+resources/
+├── views/                  # Blade templates
+│   ├── admin/              # Admin dashboard views
+│   └── club-manager/       # Club manager views
+│
+routes/
+├── web.php                 # Web routes
+│
+public/                     # Laravel public entry point
+├── index.php
+```
 ---
 
 ## 🧪 Upcoming Enhancements (Roadmap)
@@ -83,8 +95,8 @@ routes/
 
 ```bash
 # Clone the repository
-git clone https://github.com/vinhartz06/IP2025-UAS.git
-cd IP2025-UAS
+git clone https://github.com/vinhartz06/mySSL.git
+cd mySSL
 
 # Install PHP dependencies
 composer install
@@ -104,3 +116,10 @@ php artisan migrate --seed
 
 # Start development server
 php artisan serve
+```
+---
+
+## ✅ Requirements
+- PHP 8.2 or higher
+- Composer
+- MySQL or MariaDB
